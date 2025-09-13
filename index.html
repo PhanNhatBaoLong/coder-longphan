@@ -1,213 +1,183 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Website Cá Nhân — Phan Nhật</title>
-<meta name="description" content="Portfolio cá nhân — giới thiệu, dự án, kỹ năng, liên hệ."/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧭</text></svg>">
-<style>
-  :root{
-    --bg:#0f1724; --card:#0b1220; --muted:#9aa6b2; --accent1:#6ee7b7; --accent2:#60a5fa;
-    --glass: rgba(255,255,255,0.03);
-    --glass2: rgba(255,255,255,0.02);
-    --text:#e6eef6;
-  }
-  [data-theme="light"]{
-    --bg:#f6f8fb; --card:#ffffff; --muted:#57606a; --accent1:#06b6d4; --accent2:#7c3aed;
-    --glass: rgba(15,23,36,0.04); --glass2: rgba(15,23,36,0.02); --text:#0b1220;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: radial-gradient(1200px 600px at 10% 10%, rgba(96,165,250,0.06), transparent),
-                radial-gradient(900px 500px at 90% 90%, rgba(110,231,183,0.04), transparent),
-                var(--bg);
-    color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    scroll-behavior:smooth;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio VIP PRO</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
 
-  /* NAV */
-  header{position:sticky; top:12px; z-index:30; display:flex; justify-content:center; pointer-events:none}
-  .nav{
-    width:100%; max-width:1100px; display:flex; gap:16px; align-items:center; padding:10px;
-    pointer-events:auto; background:linear-gradient(180deg,var(--glass),transparent); border-radius:14px;
-    box-shadow: 0 6px 20px rgba(2,6,23,0.5);
-    backdrop-filter: blur(6px);
-  }
-  .brand{display:flex; gap:10px; align-items:center; font-weight:700}
-  .logo{
-    width:44px; height:44px; border-radius:10px; display:grid; place-items:center;
-    background:linear-gradient(135deg,var(--accent1),var(--accent2)); color:#052029; font-weight:800;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  }
-  nav{margin-left:auto; display:flex; gap:8px; align-items:center}
-  nav a{color:var(--text); text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; opacity:0.9}
-  nav a:hover{background:var(--glass2)}
-  .btn {
-    background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#022029; padding:8px 12px; border-radius:10px; border:none; cursor:pointer; font-weight:700;
-  }
+    /* Nền gradient động */
+    body {
+      background: linear-gradient(270deg, #ff6ec7, #00f2fe, #4facfe, #f093fb);
+      background-size: 800% 800%;
+      animation: gradient 20s ease infinite;
+    }
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
 
-  /* HERO */
-  .hero{
-    max-width:1100px; margin:32px auto; display:grid; grid-template-columns: 1fr 420px; gap:30px; padding:36px;
-  }
-  .card{
-    background:linear-gradient(180deg,var(--card), rgba(0,0,0,0.02)); border-radius:18px; padding:28px; box-shadow: 0 12px 40px rgba(2,6,23,0.5);
-    backdrop-filter: blur(6px);
-  }
-  .intro h1{font-size:clamp(26px,4vw,40px); margin:0 0 10px}
-  .sub{color:var(--muted); margin-bottom:18px}
-  .hero-grid{display:flex; gap:20px; align-items:center}
+    header {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    header h2 {
+      font-size: 1.5rem;
+      min-height: 30px;
+    }
 
-  /* blob */
-  .blob-wrap{position:relative; height:100%; display:flex; align-items:center; justify-content:center}
-  .blob{
-    width:320px; height:320px; border-radius:40%; background:linear-gradient(135deg,var(--accent2),var(--accent1));
-    filter: blur(22px) saturate(120%); transform:rotate(0deg); animation: blob 8s infinite;
-  }
-  @keyframes blob{
-    0%{border-radius:35% 65% 45% 55% / 55% 45% 65% 35%; transform:translateY(0) rotate(0deg) scale(1)}
-    50%{border-radius:65% 35% 55% 45% / 45% 55% 35% 65%; transform:translateY(-10px) rotate(10deg) scale(1.03)}
-    100%{border-radius:35% 65% 45% 55% / 55% 45% 65% 35%; transform:translateY(0) rotate(0deg) scale(1)}
-  }
-  .avatar{
-    width:160px; height:160px; border-radius:24px; display:grid; place-items:center; font-weight:800;
-    background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); position:absolute;
-    box-shadow: 0 10px 30px rgba(2,6,23,0.6);
-    transform:translateY(10px);
-  }
+    /* Card kỹ năng */
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 50px auto;
+      max-width: 1000px;
+      padding: 20px;
+    }
+    .card {
+      width: 250px;
+      height: 300px;
+      perspective: 1000px;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .card-front {
+      background: rgba(0,0,0,0.4);
+    }
+    .card-back {
+      background: rgba(255,255,255,0.9);
+      color: #333;
+      transform: rotateY(180deg);
+    }
 
-  /* sections */
-  section{max-width:1100px; margin:28px auto; padding:18px}
-  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-  .about{display:flex; gap:20px; align-items:flex-start}
-  .skills .skill{margin-bottom:12px}
-  .bar{height:10px; background:linear-gradient(90deg,#09121a,var(--glass2)); border-radius:999px; overflow:hidden}
-  .bar > i{display:block; height:100%; width:40%; background:linear-gradient(90deg,var(--accent1),var(--accent2)); border-radius:999px; transition:width .9s ease}
+    /* Social */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 50px;
+    }
+    .socials a {
+      font-size: 2rem;
+      color: white;
+      transition: transform 0.3s, text-shadow 0.3s;
+    }
+    .socials a:hover {
+      transform: scale(1.2);
+      text-shadow: 0 0 15px white;
+    }
 
-  /* project cards */
-  .projects{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px}
-  .proj{border-radius:14px; padding:18px; background:linear-gradient(180deg,var(--glass),transparent); transition: transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s; cursor:pointer; min-height:160px}
-  .proj:hover{transform:translateY(-8px) rotate(-1deg) scale(1.02); box-shadow:0 18px 40px rgba(2,6,23,0.5)}
-
-  /* contact */
-  .contact-form{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-  .contact-form input, .contact-form textarea{padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text)}
-  .contact-form textarea{grid-column:1/3; min-height:120px; resize:vertical}
-
-  /* footer */
-  footer{max-width:1100px; margin:16px auto 80px; text-align:center; color:var(--muted)}
-
-  /* reveal animation */
-  .reveal{opacity:0; transform: translateY(18px) scale(.99); transition: all .75s cubic-bezier(.2,.9,.3,1); will-change:transform,opacity}
-  .reveal.visible{opacity:1; transform:none}
-
-  /* responsive */
-  @media (max-width:920px){
-    .hero{grid-template-columns:1fr; padding:18px}
-    .blob{width:240px;height:240px}
-    .avatar{position:relative; margin:0 auto; transform:none}
-    .grid-3{grid-template-columns:1fr}
-    .contact-form{grid-template-columns:1fr}
-  }
-</style>
+    /* Scroll animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Xin chào, mình là Long 👋</h1>
+    <h2 id="typing"></h2>
+  </header>
 
-<header>
-  <div class="nav">
-    <div class="brand">
-      <div class="logo">PN</div>
-      <div>
-        <div style="font-size:14px">Phan Nhật</div>
-        <div style="font-size:11px;color:var(--muted)">Frontend • Developer • Creative</div>
+  <section class="cards">
+    <div class="card fade-in">
+      <div class="card-inner">
+        <div class="card-front">⚡ Frontend</div>
+        <div class="card-back">HTML, CSS, JavaScript, React</div>
       </div>
     </div>
+    <div class="card fade-in">
+      <div class="card-inner">
+        <div class="card-front">🔥 Backend</div>
+        <div class="card-back">Node.js, Express, MongoDB</div>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-inner">
+        <div class="card-front">🚀 Projects</div>
+        <div class="card-back">Web cá nhân, Blog, Game mini</div>
+      </div>
+    </div>
+  </section>
 
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-      <button id="themeToggle" class="btn" title="Toggle theme">☀️/🌙</button>
-    </nav>
+  <div class="socials fade-in">
+    <a href="https://facebook.com" target="_blank">🌐</a>
+    <a href="https://github.com" target="_blank">💻</a>
+    <a href="mailto:youremail@example.com">📧</a>
   </div>
-</header>
 
-<main>
-  <!-- HERO -->
-  <section id="home" class="hero">
-    <div class="card intro reveal">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div>
-          <h1>Xin chào, mình là <span style="color:var(--accent1)">Phan Nhật</span> 👋</h1>
-          <div class="sub">Frontend Developer & UI enthusiast — mình tạo trải nghiệm web mượt, đẹp và nhanh.</div>
-          <div style="font-weight:700; margin-bottom:12px">Mình đang làm: <span id="typed" style="color:var(--accent2)"></span></div>
-          <p class="muted" style="color:var(--muted)">Muốn xem dự án thực tế hoặc tải CV? Kéo xuống nhé.</p>
-          <div style="display:flex; gap:10px; margin-top:18px;">
-            <a class="btn" href="#projects">Xem dự án</a>
-            <a class="btn" href="mailto:youremail@example.com" style="background:transparent; color:var(--text); border:1px solid rgba(255,255,255,0.06)">Liên hệ</a>
-          </div>
-        </div>
-        <div style="text-align:right; color:var(--muted); font-size:13px">Last update: 2025</div>
-      </div>
-      <hr style="border:none;height:1px;background:linear-gradient(90deg,transparent,var(--glass2),transparent); margin:18px 0">
-      <div style="display:flex; gap:12px; align-items:center">
-        <div style="width:64px; height:64px; border-radius:12px; background:linear-gradient(90deg,var(--accent1),var(--accent2)); display:grid; place-items:center; font-weight:900; color:#021"/>
-        <div>
-          <div style="font-weight:800">Full-stack mindset</div>
-          <div style="color:var(--muted); font-size:13px">Build UI, connect API, ship fast.</div>
-        </div>
-      </div>
-    </div>
+  <script>
+    // Hiệu ứng gõ chữ
+    const texts = ["Web Developer", "Designer", "Freelancer", "Creator"];
+    let i = 0, j = 0, currentText = "", isDeleting = false;
+    function type() {
+      currentText = texts[i];
+      if (!isDeleting && j <= currentText.length) {
+        document.getElementById("typing").innerText = currentText.substring(0, j++);
+      } else if (isDeleting && j >= 0) {
+        document.getElementById("typing").innerText = currentText.substring(0, j--);
+      }
+      if (j === currentText.length) { isDeleting = true; setTimeout(type, 1500); return; }
+      if (j < 0) { isDeleting = false; i = (i+1)%texts.length; }
+      setTimeout(type, isDeleting ? 80 : 120);
+    }
+    type();
 
-    <div class="card blob-wrap reveal" style="display:flex; align-items:center; justify-content:center;">
-      <div class="blob" aria-hidden="true"></div>
-      <div class="avatar" style="width:160px; height:160px; border-radius:20px; color:var(--text);">
-        <div style="text-align:center">
-          <div style="font-size:36px">PN</div>
-          <div style="font-size:12px; color:var(--muted)">Designer & Dev</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="card reveal" style="padding:28px; margin-top:8px">
-    <h2>About</h2>
-    <div class="about" style="margin-top:12px">
-      <div style="flex:1">
-        <p style="color:var(--muted)">Mình là một developer thích làm web mượt, tương tác tốt và tối ưu cho người dùng. Thích thử nghiệm animation nhỏ, micro-interactions và tối ưu tốc độ.</p>
-        <ul style="color:var(--muted)">
-          <li>📍 Địa điểm: Việt Nam</li>
-          <li>💼 Vị trí: Frontend / UI Engineer</li>
-          <li>📧 Email: youremail@example.com</li>
-        </ul>
-      </div>
-      <div style="width:320px">
-        <div style="font-weight:700; margin-bottom:8px">Quick facts</div>
-        <div style="display:grid; gap:8px">
-          <div style="background:var(--glass); padding:12px; border-radius:10px">
-            <div style="font-weight:800">Projects</div>
-            <div style="color:var(--muted)">10+ shipped</div>
-          </div>
-          <div style="background:var(--glass); padding:12px; border-radius:10px">
-            <div style="font-weight:800">Experience</div>
-            <div style="color:var(--muted)">3 years</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="reveal card">
-    <h2>Skills</h2>
-    <div style="display:flex; gap:18px; margin-top:12px; flex-wrap:wrap">
-      <div style="flex:1; min-width:260px">
+    // Scroll animation
+    const faders = document.querySelectorAll('.fade-in');
+    window.addEventListener('scroll', () => {
+      faders.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 50) {
+          el.classList.add('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>ex:1; min-width:260px">
         <div class="skill">
           <div style="display:flex; justify-content:space-between"><div>HTML / CSS</div><div>95%</div></div>
           <div class="bar"><i style="width:95%"></i></div>
