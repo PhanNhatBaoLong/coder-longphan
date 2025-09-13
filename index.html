@@ -7,43 +7,83 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: #000;
-      color: white;
+      color: #fff;
+      background: #000; /* nền đen */
+      overflow: hidden;
+    }
+
+    /* canvas cho hiệu ứng hạt sáng */
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
     }
 
     .card {
       position: relative;
-      width: 360px;
-      padding: 30px;
+      z-index: 1;
+      background: rgba(20, 20, 20, 0.85);
+      padding: 35px;
       border-radius: 20px;
-      background: rgba(20,20,20,0.85);
-      box-shadow: 0 0 40px rgba(255,105,180,0.5);
-      overflow: hidden; /* hoa chỉ rơi trong card */
       text-align: center;
+      width: 360px;
+      box-shadow: 0 0 40px rgba(0, 255, 170, 0.4);
+      backdrop-filter: blur(10px);
+      transition: 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 50px rgba(138, 43, 226, 0.7);
     }
 
     .avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      border: 3px solid #ff69b4;
+      object-fit: cover;
+      border: 3px solid #00ffaa;
       margin-bottom: 15px;
-      box-shadow: 0 0 20px #ff69b4;
+      box-shadow: 0 0 25px #00ffaa, 0 0 50px #8a2be2;
     }
 
     h1 {
       margin: 10px 0;
-      font-size: 28px;
+      font-size: 30px;
       font-weight: bold;
-      background: linear-gradient(90deg, #ff69b4, #ff00ff, #8a2be2);
+      background: linear-gradient(90deg, #00ffaa, #ff00cc, #8a2be2);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(255,105,180,0.6);
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 20px rgba(255,0,200,0.6), 0 0 40px rgba(0,255,200,0.4);
+    }
+
+    .typing {
+      font-size: 15px;
+      font-weight: 500;
+      color: #eee;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #00ffaa;
+      width: 0;
+      margin: 0 auto 20px auto;
+      animation: typing 4s steps(30, end) infinite alternate,
+                 blink 0.7s step-end infinite;
+      text-shadow: 0 0 10px #00ffaa;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
 
     .links a {
@@ -51,99 +91,101 @@
       text-decoration: none;
       margin: 12px 0;
       padding: 12px;
-      border-radius: 10px;
+      border-radius: 12px;
       background: rgba(255,255,255,0.05);
       color: #fff;
       font-weight: bold;
-      transition: 0.3s;
+      transition: all 0.3s ease;
       position: relative;
-      z-index: 2; /* nằm trên hoa */
+      overflow: hidden;
+    }
+
+    .links a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(0,255,170,0.4), transparent);
+      transition: all 0.5s;
+    }
+
+    .links a:hover::before {
+      left: 100%;
     }
 
     .links a:hover {
-      background: rgba(255,105,180,0.2);
-      box-shadow: 0 0 15px #ff69b4;
-      transform: scale(1.05);
+      background: rgba(0,255,170,0.1);
+      box-shadow: 0 0 20px #00ffaa, 0 0 40px #8a2be2;
+      transform: scale(1.08);
     }
 
     footer {
-      margin-top: 20px;
+      margin-top: 25px;
       font-size: 13px;
-      color: #aaa;
-      z-index: 2;
-      position: relative;
-    }
-
-    canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none; /* không che click */
-      z-index: 1;
+      color: #777;
     }
   </style>
 </head>
 <body>
+  <canvas id="bg"></canvas>
+
   <div class="card">
-    <canvas id="sakura"></canvas>
     <img src="https://i.ibb.co/5gXFmmH9/014916b2a62a2d74743b-1.jpg" alt="Avatar" class="avatar">
     <h1>Phan Nhat Bao Long</h1>
+    <p class="typing">Xin chào! Đây là không gian cá nhân của mình 🚀</p>
     <div class="links">
       <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
       <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
-      <a href="https://t.me/longphandz" target="_blank">📌 Telegram Box</a>
+      <a href="https://t.me/longphandz" target="_blank">📌 Telegram</a>
       <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Gửi Email</a>
     </div>
     <footer>© 2025 Phan Nhat Bao Long</footer>
   </div>
 
   <script>
-    const canvas = document.getElementById("sakura");
+    // Hiệu ứng hạt sáng rơi
+    const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    const petalImg = new Image();
-    petalImg.src = "https://i.ibb.co/mvRJ6fM/sakura-petal.png"; // ảnh hoa đào
-
-    class Petal {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * -canvas.height;
-        this.size = 15 + Math.random() * 15;
-        this.speed = 0.5 + Math.random() * 1;
-        this.swing = Math.random() * 100;
-        this.swingSpeed = 0.02 + Math.random() * 0.02;
-      }
-      update() {
-        this.y += this.speed;
-        this.x += Math.sin(this.y * this.swingSpeed + this.swing) * 0.8;
-        if (this.y > canvas.height) this.reset();
-      }
-      draw() {
-        ctx.drawImage(petalImg, this.x, this.y, this.size, this.size);
-      }
-    }
-
-    const petals = Array.from({ length: 25 }, () => new Petal());
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      petals.forEach(p => {
-        p.update();
-        p.draw();
+    const particles = [];
+    for (let i = 0; i < 60; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 1,
+        d: Math.random() * 1 + 0.5
       });
-      requestAnimationFrame(animate);
     }
 
-    petalImg.onload = animate;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(0,255,170,0.8)";
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, false);
+        ctx.fill();
+      });
+      update();
+    }
 
+    function update() {
+      particles.forEach(p => {
+        p.y += p.d;
+        if (p.y > canvas.height) {
+          p.y = 0;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    setInterval(draw, 33);
     window.addEventListener("resize", () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
   </script>
 </body>
