@@ -134,55 +134,59 @@
   <div class="card">
     <img src="https://i.ibb.co/5gXFmmH9/014916b2a62a2d74743b-1.jpg" alt="Avatar" class="avatar">
     <h1>Phan Nhat Bao Long</h1>
-    <p class="typing">Xin chào! Đây là không gian cá nhân của mình 🚀</p>
+    <p class="typing">root@localhost:~# echo "Hello Word!!"</p>
     <div class="links">
       <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
       <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
-      <a href="https://t.me/longphandz" target="_blank">📌 Telegram</a>
+      <a href="https://t.me/longphandz" target="_blank">📌 Telegram Box </a>
       <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Gửi Email</a>
     </div>
     <footer>© 2025 Phan Nhat Bao Long</footer>
   </div>
 
   <script>
-    // Hiệu ứng hạt sáng rơi
     const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const particles = [];
-    for (let i = 0; i < 60; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2 + 1,
-        d: Math.random() * 1 + 0.5
-      });
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(0,255,170,0.8)";
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, false);
-        ctx.fill();
-      });
-      update();
-    }
-
-    function update() {
-      particles.forEach(p => {
-        p.y += p.d;
-        if (p.y > canvas.height) {
-          p.y = 0;
-          p.x = Math.random() * canvas.width;
+    class Star {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.r = Math.random() * 1.5 + 0.5;
+        this.alpha = Math.random();
+        this.dAlpha = (Math.random() * 0.02 + 0.005) * (Math.random() < 0.5 ? -1 : 1);
+      }
+      update() {
+        this.alpha += this.dAlpha;
+        if (this.alpha <= 0 || this.alpha >= 1) {
+          this.dAlpha *= -1;
         }
-      });
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,200,${this.alpha})`;
+        ctx.fill();
+      }
     }
 
-    setInterval(draw, 33);
+    const stars = Array.from({ length: 120 }, () => new Star());
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        star.update();
+        star.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
