@@ -1,104 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile Card</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thông tin cá nhân — [Tên của bạn]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: url("https://i.ibb.co/m8bC6gS/wallpaperflare-com-wallpaper.jpg") no-repeat center center/cover;
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#6ee7b7;
+      --glass: rgba(255,255,255,0.04);
     }
-    .card {
-      background: rgba(20, 20, 20, 0.6);
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      width: 320px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 25px rgba(255,255,255,0.2);
-      color: #fff;
-      animation: fadeIn 1s ease;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(110,231,183,0.06), transparent 6%),
+                  radial-gradient(1000px 500px at 90% 90%, rgba(99,102,241,0.04), transparent 6%),
+                  var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      display:flex;align-items:center;justify-content:center;padding:32px;
     }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: scale(0.9);}
-      to {opacity: 1; transform: scale(1);}
+    .card{
+      width:100%;max-width:960px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;padding:28px;box-shadow:0 10px 30px rgba(2,6,23,0.6);backdrop-filter:blur(6px);
+      display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:center;border:1px solid rgba(255,255,255,0.03)
     }
-    .avatar {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      margin-bottom: 15px;
-      object-fit: cover;
-      box-shadow: 0 0 20px #9b59b6;
+    .avatar{
+      width:180px;height:180px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg,var(--glass), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.03);
+      position:relative
     }
-    h1 {
-      margin: 5px 0;
-      font-size: 1.6rem;
-      text-shadow: 0 0 10px #9b59b6;
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .initials{
+      width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:var(--bg);background:linear-gradient(135deg,#6ee7b7,#60a5fa)
     }
-    p {
-      font-size: 0.9rem;
-      color: #ccc;
-      margin-bottom: 20px;
+    h1{margin:0;font-size:22px;letter-spacing:0.2px}
+    .role{color:var(--muted);margin-top:6px;font-size:14px}
+    .bio{margin-top:14px;color:var(--muted);line-height:1.5}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .pill{background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:999px;font-weight:600;border:1px solid rgba(255,255,255,0.02);font-size:13px;color:var(--muted)}
+    .links{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+    .link-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;text-decoration:none;color:inherit;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);transition:transform .14s ease,box-shadow .14s ease}
+    .link-btn:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(2,6,23,0.6)}
+    .link-icon{width:36px;height:36px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.02);font-weight:700}
+    .right{padding:8px 6px 6px 6px}
+    .actions{display:flex;gap:10px;margin-top:18px}
+    .btn{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),#60a5fa);color:#042025;font-weight:700;cursor:pointer}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600;padding:10px 12px;border-radius:10px;cursor:pointer}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.02),transparent);margin:18px 0;border-radius:2px}
+    footer{font-size:13px;color:var(--muted);margin-top:8px}
+    @media (max-width:720px){
+      .card{grid-template-columns:1fr;max-width:640px;padding:18px}
+      .avatar{width:140px;height:140px;margin:0 auto;border-radius:12px}
+      .meta{justify-content:center}
     }
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .socials a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.3rem;
-      transition: transform 0.3s, color 0.3s;
-    }
-    .socials a:hover {
-      transform: scale(1.2);
-      color: #9b59b6;
-    }
-    .links a {
-      display: block;
-      margin: 10px 0;
-      padding: 12px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: bold;
-      color: #fff;
-      background: linear-gradient(45deg, #9b59b6, #3498db);
-      box-shadow: 0 0 15px rgba(155, 89, 182, 0.6);
-      transition: transform 0.2s, box-shadow 0.3s;
-    }
-    .links a:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 0 25px rgba(155, 89, 182, 1);
-    }
+    @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+    .avatar{animation:floaty 4s ease-in-out infinite}
   </style>
 </head>
 <body>
-  <div class="card">
-    <img src="https://i.ibb.co/YP2K7Qj/avatar.png" alt="Avatar" class="avatar">
-    <h1>Phan Nhật Long</h1>
-    <p>💻 Developer | 🎮 Gamer | 🎧 Music</p>
-    
-    <div class="socials">
-      <a href="#">🌐</a>
-      <a href="#">🐦</a>
-      <a href="#">📷</a>
-      <a href="#">💬</a>
+  <main class="card" role="main">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+      <div class="avatar" id="avatar">
+        <img id="avatarImg" src="" alt="Avatar" style="display:none">
+        <div id="avatarInitials" class="initials">NB</div>
+      </div>
+      <div style="text-align:center;color:var(--muted);font-size:13px;">Thêm ảnh hoặc thay tên để cập nhật</div>
     </div>
 
-    <div class="links">
-      <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Box Zalo 1</a>
-      <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Box Zalo 2</a>
+    <div class="right">
+      <h1 id="fullName">Nhật Bảo Long Phan <span style="font-size:13px;color:var(--accent);margin-left:8px">• dev / hacker curious</span></h1>
+      <div class="role" id="role">Frontend / Android tinkerer · tối ưu hệ thống · bảo mật</div>
+
+      <p class="bio" id="bio">Xin chào! Mình là một người thích mò mẫm Android, tối ưu hiệu suất và cài đặt bảo mật cho các tool. Mình làm website, script, và thích build công cụ tiện lợi để xài cá nhân.</p>
+
+      <div class="meta">
+        <div class="pill">📍 Việt Nam</div>
+        <div class="pill">💼 Freelancer / Side projects</div>
+        <div class="pill">✉️ <span id="emailText">your.email@example.com</span></div>
+      </div>
+
+      <div class="links">
+        <a class="link-btn" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+          <span class="link-icon">GH</span>
+          <div>
+            <div style="font-weight:700">GitHub</div>
+            <div style="font-size:13px;color:var(--muted)">github.com/yourname</div>
+          </div>
+        </a>
+
+        <a class="link-btn" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+          <span class="link-icon">IN</span>
+          <div>
+            <div style="font-weight:700">LinkedIn</div>
+            <div style="font-size:13px;color:var(--muted)">linkedin.com/in/yourname</div>
+          </div>
+        </a>
+
+        <a class="link-btn" href="https://zalo.me/" target="_blank" rel="noopener noreferrer">
+          <span class="link-icon">ZA</span>
+          <div>
+            <div style="font-weight:700">Zalo Group</div>
+            <div style="font-size:13px;color:var(--muted)">mời vào nhóm / liên hệ nhanh</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="actions">
+        <button class="btn" id="copyEmail">Sao chép email</button>
+        <button class="ghost" id="downloadVcard">Tải vCard</button>
+      </div>
+
+      <footer>
+        <div>Bản demo cá nhân — sửa <strong>fullName</strong>, <strong>bio</strong>, avatar và links trong file.</div>
+      </footer>
     </div>
-  </div>
+  </main>
+
+  <script>
+    const DATA = {
+      name: 'Nhật Bảo Long Phan',
+      role: 'Frontend / Android tinkerer · tối ưu hệ thống · bảo mật',
+      bio: 'Xin chào! Mình là một người thích mò mẫm Android, tối ưu hiệu suất và cài đặt bảo mật cho các tool. Mình làm website, script, và thích build công cụ tiện lợi để xài cá nhân.',
+      location: 'Việt Nam',
+      email: 'your.email@example.com',
+      avatarUrl: '', // dán link ảnh vào đây
+      links: [
+        { title: 'GitHub', subtitle: 'github.com/yourname', url: 'https://github.com/' },
+        { title: 'LinkedIn', subtitle: 'linkedin.com/in/yourname', url: 'https://www.linkedin.com/' },
+        { title: 'Zalo Group', subtitle: 'zalo.me/g/yourgroup', url: 'https://zalo.me/' }
+      ]
+    }
+
+    document.getElementById('fullName').firstChild && (document.getElementById('fullName').childNodes[0].nodeValue = DATA.name + ' ');
+    document.getElementById('role').textContent = DATA.role;
+    document.getElementById('bio').textContent = DATA.bio;
+    document.querySelector('.pill:nth-child(1)').textContent = '📍 ' + DATA.location;
+    document.getElementById('emailText').textContent = DATA.email;
+
+    const img = document.getElementById('avatarImg');
+    const initials = document.getElementById('avatarInitials');
+    if(DATA.avatarUrl && DATA.avatarUrl.trim() !== ''){
+      img.src = DATA.avatarUrl;
+      img.style.display = 'block';
+      initials.style.display = 'none';
+    } else {
+      const parts = DATA.name.split(' ').filter(Boolean);
+      const letter = (parts.length===1)?parts[0].slice(0,2).toUpperCase(): (parts[0][0]+parts[parts.length-1][0]).toUpperCase();
+      initials.textContent = letter;
+      img.style.display = 'none';
+      initials.style.display = 'flex';
+    }
+
+    const linksContainer = document.querySelector('.links');
+    linksContainer.innerHTML = '';
+    DATA.links.forEach(l=>{
+      const a = document.createElement('a');
+      a.className = 'link-btn';
+      a.href = l.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.innerHTML = `<span class="link-icon">${(l.title||'LN').slice(0,2).toUpperCase()}</span><div><div style="font-weight:700">${l.title}</div><div style="font-size:13px;color:var(--muted)">${l.subtitle||l.url}</div></div>`;
+      linksContainer.appendChild(a);
+    });
+
+    document.getElementById('copyEmail').addEventListener('click', async ()=>{
+      try{
+        await navigator.clipboard.writeText(DATA.email);
+        const old = document.getElementById('copyEmail').textContent;
+        document.getElementById('copyEmail').textContent = 'Đã sao chép!';
+        setTimeout(()=> document.getElementById('copyEmail').textContent = old, 1300);
+      }catch(e){
+        alert('Không thể sao chép tự động — hãy copy thủ công: '+DATA.email)
+      }
+    });
+
+    document.getElementById('downloadVcard').addEventListener('click', ()=>{
+      const v = `BEGIN:VCARD\nVERSION:3.0\nFN:${DATA.name}\nEMAIL:${DATA.email}\nORG:${DATA.role}\nEND:VCARD`;
+      const blob = new Blob([v],{type:'text/vcard'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = (DATA.name.replace(/\\s+/g,'_')||'contact') + '.vcf';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+  </script>
 </body>
 </html>
