@@ -3,355 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio VIP PRO</title>
+  <title>Profile Long</title>
   <style>
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      overflow-x: hidden;
-    }
-
-    /* Nền gradient động */
-    body {
-      background: linear-gradient(270deg, #ff6ec7, #00f2fe, #4facfe, #f093fb);
-      background-size: 800% 800%;
-      animation: gradient 20s ease infinite;
-    }
-    @keyframes gradient {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    header {
-      text-align: center;
-      padding: 80px 20px;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
-    header h2 {
-      font-size: 1.5rem;
-      min-height: 30px;
-    }
-
-    /* Card kỹ năng */
-    .cards {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #0d0d0d;
+      color: #fff;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin: 50px auto;
-      max-width: 1000px;
-      padding: 20px;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      overflow: hidden;
     }
     .card {
-      width: 250px;
-      height: 300px;
-      perspective: 1000px;
-    }
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
+      background: #1a1a1a;
+      border-radius: 20px;
+      padding: 40px;
       text-align: center;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
+      max-width: 350px;
+      box-shadow: 0 0 20px rgba(0,255,200,0.3);
+      animation: fadeIn 1.2s ease;
     }
-    .card:hover .card-inner {
-      transform: rotateY(180deg);
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
     }
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 15px;
-      padding: 20px;
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #00ffc8;
+      margin-bottom: 20px;
+      object-fit: cover;
+      box-shadow: 0 0 15px #00ffc8;
+    }
+    /* Neon name */
+    h1 {
+      margin: 10px 0;
+      font-size: 1.8rem;
+      color: #00ffc8;
+      text-shadow: 0 0 5px #00ffc8, 0 0 15px #00ffc8, 0 0 30px #00aaff;
+      animation: neonBlink 2s infinite alternate;
+    }
+    @keyframes neonBlink {
+      from { text-shadow: 0 0 5px #00ffc8, 0 0 15px #00ffc8, 0 0 30px #00aaff; }
+      to   { text-shadow: 0 0 10px #00ffc8, 0 0 25px #00ffc8, 0 0 40px #00aaff; }
+    }
+    /* Typing effect */
+    #typing {
+      font-size: 1rem;
+      color: #aaa;
+      margin-bottom: 30px;
+      min-height: 24px;
+      border-right: 2px solid #00ffc8;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    /* Links */
+    .links {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .links a {
+      display: block;
+      padding: 12px;
+      border-radius: 12px;
+      text-decoration: none;
       font-weight: bold;
+      color: #0d0d0d;
+      background: linear-gradient(45deg, #00ffc8, #00aaff);
+      box-shadow: 0 0 15px rgba(0,255,200,0.4);
+      transition: transform 0.2s, box-shadow 0.3s;
     }
-    .card-front {
-      background: rgba(0,0,0,0.4);
+    .links a:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 0 25px rgba(0,255,200,0.7);
     }
-    .card-back {
-      background: rgba(255,255,255,0.9);
-      color: #333;
-      transform: rotateY(180deg);
+    /* Marquee */
+    .marquee {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      position: absolute;
+      bottom: 0;
+      background: #111;
+      padding: 10px 0;
+      font-size: 1rem;
+      color: #00ffc8;
+      border-top: 1px solid #222;
     }
-
-    /* Social */
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 50px;
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollText 15s linear infinite;
     }
-    .socials a {
-      font-size: 2rem;
-      color: white;
-      transition: transform 0.3s, text-shadow 0.3s;
-    }
-    .socials a:hover {
-      transform: scale(1.2);
-      text-shadow: 0 0 15px white;
-    }
-
-    /* Scroll animation */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-    .fade-in.show {
-      opacity: 1;
-      transform: translateY(0);
+    @keyframes scrollText {
+      0%   { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Xin chào, mình là Long 👋</h1>
-    <h2 id="typing"></h2>
-  </header>
+  <div class="card">
+    <img src="https://i.imgur.com/4ZQZ4QF.png" alt="Avatar" class="avatar">
+    <h1>Phan Nhật Long</h1>
+    <p id="typing"></p>
+    <div class="links">
+      <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Box Zalo 1</a>
+      <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Box Zalo 2</a>
+    </div>
+  </div>
 
-  <section class="cards">
-    <div class="card fade-in">
-      <div class="card-inner">
-        <div class="card-front">⚡ Frontend</div>
-        <div class="card-back">HTML, CSS, JavaScript, React</div>
-      </div>
-    </div>
-    <div class="card fade-in">
-      <div class="card-inner">
-        <div class="card-front">🔥 Backend</div>
-        <div class="card-back">Node.js, Express, MongoDB</div>
-      </div>
-    </div>
-    <div class="card fade-in">
-      <div class="card-inner">
-        <div class="card-front">🚀 Projects</div>
-        <div class="card-back">Web cá nhân, Blog, Game mini</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="socials fade-in">
-    <a href="https://facebook.com" target="_blank">🌐</a>
-    <a href="https://github.com" target="_blank">💻</a>
-    <a href="mailto:youremail@example.com">📧</a>
+  <div class="marquee">
+    <span>🚀 Welcome to my profile • Kết nối với mình qua Zalo • Phan Nhật Long 🔥</span>
   </div>
 
   <script>
-    // Hiệu ứng gõ chữ
-    const texts = ["Web Developer", "Designer", "Freelancer", "Creator"];
-    let i = 0, j = 0, currentText = "", isDeleting = false;
+    // Typing effect
+    const texts = ["Chào mừng đến với profile của mình ✨", "Web Developer 💻", "Thích sáng tạo & công nghệ 🚀"];
+    let i = 0, j = 0, isDeleting = false, speed = 100;
+    const typing = document.getElementById("typing");
+
     function type() {
-      currentText = texts[i];
-      if (!isDeleting && j <= currentText.length) {
-        document.getElementById("typing").innerText = currentText.substring(0, j++);
-      } else if (isDeleting && j >= 0) {
-        document.getElementById("typing").innerText = currentText.substring(0, j--);
+      const current = texts[i];
+      if (!isDeleting) {
+        typing.textContent = current.substring(0, j++);
+        if (j > current.length) {
+          isDeleting = true;
+          setTimeout(type, 1500);
+          return;
+        }
+      } else {
+        typing.textContent = current.substring(0, j--);
+        if (j < 0) {
+          isDeleting = false;
+          i = (i+1) % texts.length;
+        }
       }
-      if (j === currentText.length) { isDeleting = true; setTimeout(type, 1500); return; }
-      if (j < 0) { isDeleting = false; i = (i+1)%texts.length; }
-      setTimeout(type, isDeleting ? 80 : 120);
+      setTimeout(type, isDeleting ? speed/2 : speed);
     }
     type();
-
-    // Scroll animation
-    const faders = document.querySelectorAll('.fade-in');
-    window.addEventListener('scroll', () => {
-      faders.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-          el.classList.add('show');
-        }
-      });
-    });
   </script>
-</body>
-</html>ex:1; min-width:260px">
-        <div class="skill">
-          <div style="display:flex; justify-content:space-between"><div>HTML / CSS</div><div>95%</div></div>
-          <div class="bar"><i style="width:95%"></i></div>
-        </div>
-        <div class="skill">
-          <div style="display:flex; justify-content:space-between"><div>JavaScript / TypeScript</div><div>90%</div></div>
-          <div class="bar"><i style="width:90%"></i></div>
-        </div>
-        <div class="skill">
-          <div style="display:flex; justify-content:space-between"><div>React / Vue</div><div>88%</div></div>
-          <div class="bar"><i style="width:88%"></i></div>
-        </div>
-      </div>
-
-      <div style="flex:1; min-width:260px">
-        <div class="skill">
-          <div style="display:flex; justify-content:space-between"><div>Performance / SEO</div><div>85%</div></div>
-          <div class="bar"><i style="width:85%"></i></div>
-        </div>
-        <div class="skill">
-          <div style="display:flex; justify-content:space-between"><div>Design / Figma</div><div>80%</div></div>
-          <div class="bar"><i style="width:80%"></i></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="reveal">
-    <h2>Featured Projects</h2>
-    <div class="projects" style="margin-top:12px">
-      <div class="proj" onclick="openProject(event,0)">
-        <div style="display:flex; justify-content:space-between; align-items:start">
-          <div style="font-weight:800">Project A</div>
-          <div style="color:var(--muted); font-size:12px">2025</div>
-        </div>
-        <p style="color:var(--muted)">Landing page tương tác, animation mượt, tối ưu mobile-first.</p>
-        <div style="margin-top:12px; font-weight:700">Tech: HTML · CSS · JS</div>
-      </div>
-
-      <div class="proj" onclick="openProject(event,1)">
-        <div style="display:flex; justify-content:space-between; align-items:start">
-          <div style="font-weight:800">Portfolio UI</div>
-          <div style="color:var(--muted); font-size:12px">2024</div>
-        </div>
-        <p style="color:var(--muted)">Template portfolio có theme switch, deploy nhanh trên GitHub Pages.</p>
-        <div style="margin-top:12px; font-weight:700">Tech: React · Netlify</div>
-      </div>
-
-      <div class="proj" onclick="openProject(event,2)">
-        <div style="display:flex; justify-content:space-between; align-items:start">
-          <div style="font-weight:800">Tooling</div>
-          <div style="color:var(--muted); font-size:12px">2023</div>
-        </div>
-        <p style="color:var(--muted)">CLI nhỏ để tự động deploy static site.</p>
-        <div style="margin-top:12px; font-weight:700">Tech: Node</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="card reveal">
-    <h2>Contact</h2>
-    <p style="color:var(--muted)">Muốn hợp tác hoặc thuê mình làm project? Gửi tin nhắn nhé.</p>
-
-    <form class="contact-form" onsubmit="onContact(event)">
-      <input id="name" placeholder="Họ và tên" required />
-      <input id="email" type="email" placeholder="Email" required />
-      <textarea id="message" placeholder="Nội dung"></textarea>
-      <button type="submit" class="btn" style="grid-column:1/3; justify-self:end">Gửi mail</button>
-    </form>
-  </section>
-
-  <footer>
-    <div>© <strong>Phan Nhật</strong> — Portfolio. Built with ❤️. <span style="color:var(--muted)">Hosted on GitHub Pages</span></div>
-  </footer>
-
-</main>
-
-<!-- Modal (simple) -->
-<div id="modal" style="position:fixed; inset:0; display:none; place-items:center; background:rgba(2,6,23,0.6); z-index:60">
-  <div style="max-width:720px; width:92%; background:var(--card); border-radius:14px; padding:18px;">
-    <div style="display:flex; justify-content:space-between; align-items:center">
-      <div style="font-weight:800" id="modalTitle">Project</div>
-      <button onclick="closeModal()" style="background:transparent; border:none; color:var(--muted); font-size:20px">✕</button>
-    </div>
-    <div id="modalBody" style="color:var(--muted); margin-top:10px">Loading...</div>
-  </div>
-</div>
-
-<script>
-  // Theme toggle & store
-  const themeToggle = document.getElementById('themeToggle');
-  const root = document.documentElement;
-  const saved = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme:light)').matches ? 'light':'dark');
-  if(saved === 'light') root.setAttribute('data-theme','light');
-
-  themeToggle.addEventListener('click', ()=> {
-    if(root.getAttribute('data-theme') === 'light'){
-      root.removeAttribute('data-theme'); localStorage.setItem('theme','dark');
-    } else { root.setAttribute('data-theme','light'); localStorage.setItem('theme','light'); }
-  });
-
-  // Small typing effect
-  const typedEl = document.getElementById('typed');
-  const words = ['Tối ưu UI/UX.', 'Làm web nhanh và gọn.', 'Tạo animation mượt.', 'Ship sản phẩm.'];
-  let wi = 0, ci = 0, forward = true;
-  function typeTick(){
-    const w = words[wi];
-    if(forward) ci++; else ci--;
-    typedEl.textContent = w.slice(0,ci);
-    if(ci === w.length) { forward = false; setTimeout(typeTick,1200); return; }
-    if(ci === 0) { forward = true; wi = (wi+1) % words.length; }
-    setTimeout(typeTick, 80);
-  }
-  typeTick();
-
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting) e.target.classList.add('visible');
-    });
-  }, {threshold:0.12});
-  reveals.forEach(r=>obs.observe(r));
-
-  // Simple project modal content
-  const modal = document.getElementById('modal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalBody = document.getElementById('modalBody');
-  const projectData = [
-    {title:'Project A', body:'Full landing page, performance tuned, animations, PWA-ready. Preview: link giả.'},
-    {title:'Portfolio UI', body:'Template portfolio with theme switch, components, GitHub Pages deploy.'},
-    {title:'Tooling', body:'Small CLI tools for automation and deploy scripts. Node-based.'}
-  ];
-  function openProject(evt,i){
-    modalTitle.textContent = projectData[i].title;
-    modalBody.textContent = projectData[i].body;
-    modal.style.display = 'grid';
-  }
-  function closeModal(){ modal.style.display = 'none'; }
-
-  // Contact form -> open mailto
-  function onContact(e){
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const msg = document.getElementById('message').value.trim();
-    const subject = encodeURIComponent('Contact from portfolio: ' + name);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
-    window.location.href = `mailto:youremail@example.com?subject=${subject}&body=${body}`;
-  }
-
-  // small accessibility: close modal with escape
-  window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
-
-  // small enhancement: animate bars when in view
-  const bars = document.querySelectorAll('.bar i');
-  const skillSection = document.getElementById('skills');
-  const barObs = new IntersectionObserver((entries)=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting){
-        bars.forEach(b=>{
-          const w = b.style.width;
-          b.style.width = '0%';
-          setTimeout(()=> b.style.width = w, 80);
-        });
-        barObs.disconnect();
-      }
-    });
-  }, {threshold:0.2});
-  if(skillSection) barObs.observe(skillSection);
-
-</script>
-
 </body>
 </html>
