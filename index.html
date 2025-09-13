@@ -17,7 +17,6 @@
       overflow: hidden;
     }
 
-    /* canvas cho hiệu ứng hạt sáng */
     canvas {
       position: absolute;
       top: 0; left: 0;
@@ -25,13 +24,12 @@
       z-index: 0;
     }
 
-    /* hiệu ứng hoa/tuyết rơi */
     .snowflakes {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       pointer-events: none;
-      z-index: 5; /* ✅ cao hơn card */
+      z-index: 5;
     }
     .snowflake {
       position: absolute;
@@ -159,7 +157,6 @@
 <body>
   <canvas id="bg"></canvas>
 
-  <!-- hiệu ứng hoa/tuyết -->
   <div class="snowflakes" aria-hidden="true">
     <div class="snowflake">❅</div>
     <div class="snowflake">❆</div>
@@ -169,26 +166,23 @@
     <div class="snowflake">❆</div>
     <div class="snowflake">❅</div>
     <div class="snowflake">❆</div>
-    <div class="snowflake">❅</div>
-    <div class="snowflake">❆</div>
   </div>
 
-<div class="card">
-  <img src="https://i.ibb.co/8L40MLtp/image.jpg" alt="Avatar" class="avatar">
-  <h1>Phan Nhat Bao Long</h1>
-  <p class="typing">root@localhost:~# echo "Hello Word!!"</p>
-  <div class="links">
-    <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
-    <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
-    <a href="https://www.tiktok.com/@longcutedzs1tg?_t=ZS-8zgtoo6ZIRs&_r=1" target="_blank">📌 Tiktok</a>
-    <a href="https://t.me/longphandz" target="_blank">📌 Telegram Box</a>
-    <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Gửi Email</a>
+  <div class="card">
+    <img src="https://i.ibb.co/8L40MLtp/image.jpg" alt="Avatar" class="avatar">
+    <h1>Phan Nhat Bao Long</h1>
+    <p class="typing">root@localhost:~# echo "Hello Word!!"</p>
+    <div class="links">
+      <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
+      <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
+      <a href="https://www.tiktok.com/@longcutedzs1tg?_t=ZS-8zgtoo6ZIRs&_r=1" target="_blank">📌 Tiktok</a>
+      <a href="https://t.me/longphandz" target="_blank">📌 Telegram Box</a>
+      <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Gửi Email</a>
+    </div>
+    <footer>© 2025 Phan Nhat Bao Long</footer>
   </div>
-  <footer>© 2025 Phan Nhat Bao Long</footer>
-</div>
 
   <script>
-    // Hiệu ứng hạt sáng rơi
     const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -231,8 +225,7 @@
       canvas.height = window.innerHeight;
     });
 
-    // random vị trí cho hoa rơi
-    document.querySelectorAll(".snowflake").forEach((el, i) => {
+    document.querySelectorAll(".snowflake").forEach(el => {
       el.style.left = Math.random() * 100 + "%";
       el.style.fontSize = (12 + Math.random() * 20) + "px";
       el.style.animationDelay = (Math.random() * 10) + "s, " + (Math.random() * 3) + "s";
