@@ -55,21 +55,13 @@
 
     h1 {
       margin: 10px 0;
-      font-size: 32px;
+      font-size: 30px;
       font-weight: bold;
       background: linear-gradient(90deg, #00ffaa, #ff00cc, #8a2be2);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: 1.8px;
-
-      /* Neon rực rỡ hơn */
-      text-shadow: 
-        0 0 8px rgba(0, 255, 170, 0.9),
-        0 0 16px rgba(255, 0, 200, 0.8),
-        0 0 32px rgba(138, 43, 226, 0.9),
-        0 0 64px rgba(0, 255, 170, 0.7);
-
-      filter: drop-shadow(0 0 6px #00ffaa) drop-shadow(0 0 12px #ff00cc);
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 20px rgba(255,0,200,0.6), 0 0 40px rgba(0,255,200,0.4);
     }
 
     .typing {
@@ -153,53 +145,47 @@
   </div>
 
   <script>
-    // Hiệu ứng hạt sáng mượt hơn
+    // Hiệu ứng hạt sáng rơi
     const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.r = Math.random() * 2 + 1;
-        this.dy = Math.random() * 1 + 0.3;
-        this.dx = (Math.random() - 0.5) * 0.3; // chuyển động ngang nhẹ
-      }
-      update() {
-        this.y += this.dy;
-        this.x += this.dx;
-        if (this.y > height) this.reset();
-        if (this.x > width || this.x < 0) this.x = Math.random() * width;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
-        ctx.fillStyle = "rgba(0,255,170,0.8)";
-        ctx.fill();
-      }
-    }
-
-    const particles = Array.from({ length: 80 }, () => new Particle());
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
+    const particles = [];
+    for (let i = 0; i < 60; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 1,
+        d: Math.random() * 1 + 0.5
       });
-      requestAnimationFrame(animate);
     }
 
-    animate();
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(0,255,170,0.8)";
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, false);
+        ctx.fill();
+      });
+      update();
+    }
 
+    function update() {
+      particles.forEach(p => {
+        p.y += p.d;
+        if (p.y > canvas.height) {
+          p.y = 0;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    setInterval(draw, 33);
     window.addEventListener("resize", () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
   </script>
 </body>
