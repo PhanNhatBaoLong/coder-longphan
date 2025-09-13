@@ -25,6 +25,34 @@
       z-index: 0;
     }
 
+    /* hiệu ứng hoa/tuyết rơi */
+    .snowflakes {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .snowflake {
+      position: absolute;
+      top: -10%;
+      color: #fff;
+      font-size: 18px;
+      text-shadow: 0 0 5px #0ff;
+      animation-name: fall, sway;
+      animation-duration: 10s, 3s;
+      animation-iteration-count: infinite, infinite;
+      animation-timing-function: linear, ease-in-out;
+    }
+    @keyframes fall {
+      0% { top: -10%; }
+      100% { top: 100%; }
+    }
+    @keyframes sway {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(80px); }
+    }
+
     .card {
       position: relative;
       z-index: 1;
@@ -131,6 +159,20 @@
 <body>
   <canvas id="bg"></canvas>
 
+  <!-- hiệu ứng hoa/tuyết -->
+  <div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+  </div>
+
   <div class="card">
     <img src="https://i.ibb.co/5gXFmmH9/014916b2a62a2d74743b-1.jpg" alt="Avatar" class="avatar">
     <h1>Phan Nhat Bao Long</h1>
@@ -186,6 +228,13 @@
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+    });
+
+    // random vị trí cho hoa rơi
+    document.querySelectorAll(".snowflake").forEach((el, i) => {
+      el.style.left = Math.random() * 100 + "%";
+      el.style.fontSize = (12 + Math.random() * 20) + "px";
+      el.style.animationDelay = (Math.random() * 10) + "s, " + (Math.random() * 3) + "s";
     });
   </script>
 </body>
