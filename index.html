@@ -3,149 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile Long</title>
+  <title>Profile Card</title>
   <style>
     body {
       margin: 0;
       font-family: "Segoe UI", sans-serif;
-      background: #0d0d0d;
-      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      flex-direction: column;
-      overflow: hidden;
+      background: url("https://i.ibb.co/m8bC6gS/wallpaperflare-com-wallpaper.jpg") no-repeat center center/cover;
     }
     .card {
-      background: #1a1a1a;
+      background: rgba(20, 20, 20, 0.6);
       border-radius: 20px;
-      padding: 40px;
+      padding: 30px;
       text-align: center;
-      max-width: 350px;
-      box-shadow: 0 0 20px rgba(0,255,200,0.3);
-      animation: fadeIn 1.2s ease;
+      width: 320px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(255,255,255,0.2);
+      color: #fff;
+      animation: fadeIn 1s ease;
     }
     @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(30px);}
-      to {opacity: 1; transform: translateY(0);}
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
     }
     .avatar {
-      width: 120px;
-      height: 120px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
-      border: 3px solid #00ffc8;
-      margin-bottom: 20px;
+      border: 3px solid #fff;
+      margin-bottom: 15px;
       object-fit: cover;
-      box-shadow: 0 0 15px #00ffc8;
+      box-shadow: 0 0 20px #9b59b6;
     }
-    /* Neon name */
     h1 {
-      margin: 10px 0;
-      font-size: 1.8rem;
-      color: #00ffc8;
-      text-shadow: 0 0 5px #00ffc8, 0 0 15px #00ffc8, 0 0 30px #00aaff;
-      animation: neonBlink 2s infinite alternate;
+      margin: 5px 0;
+      font-size: 1.6rem;
+      text-shadow: 0 0 10px #9b59b6;
     }
-    @keyframes neonBlink {
-      from { text-shadow: 0 0 5px #00ffc8, 0 0 15px #00ffc8, 0 0 30px #00aaff; }
-      to   { text-shadow: 0 0 10px #00ffc8, 0 0 25px #00ffc8, 0 0 40px #00aaff; }
+    p {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 20px;
     }
-    /* Typing effect */
-    #typing {
-      font-size: 1rem;
-      color: #aaa;
-      margin-bottom: 30px;
-      min-height: 24px;
-      border-right: 2px solid #00ffc8;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    /* Links */
-    .links {
+    .socials {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       gap: 15px;
+      margin-bottom: 20px;
+    }
+    .socials a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.3rem;
+      transition: transform 0.3s, color 0.3s;
+    }
+    .socials a:hover {
+      transform: scale(1.2);
+      color: #9b59b6;
     }
     .links a {
       display: block;
+      margin: 10px 0;
       padding: 12px;
       border-radius: 12px;
       text-decoration: none;
       font-weight: bold;
-      color: #0d0d0d;
-      background: linear-gradient(45deg, #00ffc8, #00aaff);
-      box-shadow: 0 0 15px rgba(0,255,200,0.4);
+      color: #fff;
+      background: linear-gradient(45deg, #9b59b6, #3498db);
+      box-shadow: 0 0 15px rgba(155, 89, 182, 0.6);
       transition: transform 0.2s, box-shadow 0.3s;
     }
     .links a:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 0 25px rgba(0,255,200,0.7);
-    }
-    /* Marquee */
-    .marquee {
-      width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      position: absolute;
-      bottom: 0;
-      background: #111;
-      padding: 10px 0;
-      font-size: 1rem;
-      color: #00ffc8;
-      border-top: 1px solid #222;
-    }
-    .marquee span {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scrollText 15s linear infinite;
-    }
-    @keyframes scrollText {
-      0%   { transform: translateX(0%); }
-      100% { transform: translateX(-100%); }
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 25px rgba(155, 89, 182, 1);
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <img src="https://i.imgur.com/4ZQZ4QF.png" alt="Avatar" class="avatar">
+    <img src="https://i.ibb.co/YP2K7Qj/avatar.png" alt="Avatar" class="avatar">
     <h1>Phan Nhật Long</h1>
-    <p id="typing"></p>
+    <p>💻 Developer | 🎮 Gamer | 🎧 Music</p>
+    
+    <div class="socials">
+      <a href="#">🌐</a>
+      <a href="#">🐦</a>
+      <a href="#">📷</a>
+      <a href="#">💬</a>
+    </div>
+
     <div class="links">
       <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Box Zalo 1</a>
       <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Box Zalo 2</a>
     </div>
   </div>
-
-  <div class="marquee">
-    <span>🚀 Welcome to my profile • Kết nối với mình qua Zalo • Phan Nhật Long 🔥</span>
-  </div>
-
-  <script>
-    // Typing effect
-    const texts = ["Chào mừng đến với profile của mình ✨", "Web Developer 💻", "Thích sáng tạo & công nghệ 🚀"];
-    let i = 0, j = 0, isDeleting = false, speed = 100;
-    const typing = document.getElementById("typing");
-
-    function type() {
-      const current = texts[i];
-      if (!isDeleting) {
-        typing.textContent = current.substring(0, j++);
-        if (j > current.length) {
-          isDeleting = true;
-          setTimeout(type, 1500);
-          return;
-        }
-      } else {
-        typing.textContent = current.substring(0, j--);
-        if (j < 0) {
-          isDeleting = false;
-          i = (i+1) % texts.length;
-        }
-      }
-      setTimeout(type, isDeleting ? speed/2 : speed);
-    }
-    type();
-  </script>
 </body>
 </html>
