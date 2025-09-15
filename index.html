@@ -8,110 +8,131 @@
     body {
       margin: 0;
       font-family: "Fira Code", monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      background: #0d0d0f;
       color: #e4e4e7;
+      overflow: hidden;
+    }
+
+    /* Matrix rain background */
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
       background: #0d0d0f;
     }
 
-    .card {
+    .terminal {
+      max-width: 720px;
+      margin: 40px auto;
       background: #18181b;
-      padding: 40px;
-      border-radius: 16px;
-      width: 420px;
-      text-align: center;
-      box-shadow: 0 0 30px rgba(0,0,0,0.6);
-      border: 1px solid #27272a;
-      transition: 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      border-color: #3b82f6;
-      box-shadow: 0 0 40px rgba(59,130,246,0.3);
-    }
-
-    .avatar {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 18px;
-      border: 3px solid #3b82f6;
-    }
-
-    h1 {
-      margin: 10px 0;
-      font-size: 26px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .role {
-      font-size: 14px;
-      color: #a1a1aa;
-      margin-bottom: 20px;
-    }
-
-    .typing {
-      font-size: 14px;
-      background: #0f172a;
-      color: #22c55e;
-      padding: 10px 14px;
-      border-radius: 8px;
-      display: inline-block;
-      margin-bottom: 20px;
-      border: 1px solid #1e293b;
-      white-space: nowrap;
+      border-radius: 10px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.6);
       overflow: hidden;
-      border-right: 2px solid #22c55e;
-      animation: typing 4s steps(30, end) infinite alternate, blink 0.7s step-end infinite;
+      border: 1px solid #27272a;
     }
 
-    @keyframes typing {from {width: 0;} to {width: 100%;}}
-    @keyframes blink {50% {border-color: transparent;}}
+    /* Fake window bar */
+    .bar {
+      display: flex;
+      align-items: center;
+      padding: 6px 10px;
+      background: #111;
+      border-bottom: 1px solid #27272a;
+    }
+    .dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .dot.red {background: #ef4444;}
+    .dot.yellow {background: #f59e0b;}
+    .dot.green {background: #22c55e;}
+
+    .content {
+      padding: 20px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .green {color: #22c55e;}
+    .blue {color: #3b82f6;}
+    .purple {color: #a855f7;}
 
     .links a {
-      display: block;
+      display: inline-block;
+      margin: 8px 12px 0 0;
       text-decoration: none;
-      margin: 10px 0;
-      padding: 12px;
-      border-radius: 10px;
+      padding: 6px 12px;
+      border-radius: 6px;
       background: #27272a;
       color: #e4e4e7;
-      font-weight: 500;
-      transition: all 0.25s ease;
+      font-size: 14px;
+      transition: 0.25s ease;
     }
-
     .links a:hover {
       background: #3b82f6;
       color: #fff;
-      transform: scale(1.05);
-    }
-
-    footer {
-      margin-top: 25px;
-      font-size: 12px;
-      color: #71717a;
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <img src="https://i.postimg.cc/CLppn1rR/IMG-20250913-174648.jpg" alt="Avatar" class="avatar">
-    <h1>Phan Nhat Bao Long</h1>
-    <p class="role">Fullstack Developer • Security Enthusiast</p>
-    <p class="typing">root@localhost:~$ echo "Hello World!"</p>
-    <div class="links">
-      <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
-      <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
-      <a href="https://www.tiktok.com/@longcutedzs1tg" target="_blank">🎬 TikTok</a>
-      <a href="https://t.me/longphandz" target="_blank">💬 Telegram</a>
-      <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Email</a>
+  <canvas id="matrix"></canvas>
+
+  <div class="terminal">
+    <div class="bar">
+      <div class="dot red"></div>
+      <div class="dot yellow"></div>
+      <div class="dot green"></div>
     </div>
-    <footer>© 2025 Phan Nhat Bao Long</footer>
+    <div class="content">
+      <p><span class="green">root@localhost</span>:<span class="blue">~</span>$ echo "<span class="purple">Hello World!</span>"</p>
+      <h2>👨‍💻 Phan Nhat Bao Long</h2>
+      <p>Fullstack Developer • Security Enthusiast</p>
+      <div class="links">
+        <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo 1</a>
+        <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo 2</a>
+        <a href="https://www.tiktok.com/@longcutedzs1tg" target="_blank">🎬 TikTok</a>
+        <a href="https://t.me/longphandz" target="_blank">💬 Telegram</a>
+        <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Email</a>
+      </div>
+    </div>
   </div>
+
+  <script>
+    // Matrix rain effect
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const chars = "01";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0,0,0,0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#22c55e";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(draw, 40);
+
+    window.addEventListener("resize", () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
+  </script>
 </body>
 </html>
