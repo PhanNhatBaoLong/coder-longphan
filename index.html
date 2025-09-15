@@ -14,6 +14,7 @@
       height: 100vh;
       background: #0d0d0f;
       color: #e4e4e7;
+      overflow: hidden;
     }
 
     .card {
@@ -25,7 +26,7 @@
       text-align: center;
       cursor: pointer;
       overflow: hidden;
-      z-index: 0;
+      z-index: 1;
     }
 
     /* Viền bảy màu */
@@ -37,7 +38,7 @@
       right: 0;
       bottom: 0;
       border-radius: 16px;
-      padding: 2px; /* độ dày viền */
+      padding: 2px;
       background: linear-gradient(270deg,
         #ff0080, #7928ca, #007cf0, #00f0ff,
         #00ff9d, #faff00, #ff7b00, #ff0000, #ff0080);
@@ -57,7 +58,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Khi click thì viền sáng mạnh hơn */
     .card:active::before {
       filter: brightness(2);
     }
@@ -131,7 +131,15 @@
       font-size: 12px;
       color: #71717a;
     }
+
+    /* canvas mưa */
+    #canvasMangBinhDinhRainEffect {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <div class="card">
@@ -148,5 +156,32 @@
     </div>
     <footer>© 2025 Phan Nhat Bao Long</footer>
   </div>
+
+  <script>
+    $(document).ready(function(){
+      $("body").append('<div class="MangBinhDinhRainEffect" style="position:fixed;z-index:0;left:0;right:0;top:0;bottom:0;pointer-events:none;"><canvas id="canvasMangBinhDinhRainEffect"></canvas></div>');
+      var n=$("#canvasMangBinhDinhRainEffect")[0];
+      if(n.width=window.innerWidth,n.height=window.innerHeight,n.getContext){
+        var t=n.getContext("2d"),a=n.width,e=n.height;
+        t.strokeStyle="rgba(174,194,224,1)",t.lineWidth=1,t.lineCap="round";
+        for(var i=[],o=0;o<1000;o++)
+          i.push({x:Math.random()*a,y:Math.random()*e,l:1*Math.random(),xs:4*Math.random()-4+2,ys:10*Math.random()+10});
+        for(var r=[],d=0;d<1000;d++)r[d]=i[d];
+        setInterval(function(){
+          t.clearRect(0,0,a,e);
+          for(var n=0;n<r.length;n++){
+            var i=r[n];
+            t.beginPath(),t.moveTo(i.x,i.y),t.lineTo(i.x+i.l*i.xs,i.y+i.l*i.ys),t.stroke()
+          }
+          !function(){
+            for(var n=0;n<r.length;n++){
+              var t=r[n];
+              t.x+=t.xs,t.y+=t.ys,(t.x>a||t.y>e)&&(t.x=Math.random()*a,t.y=-20)
+            }
+          }()
+        },30)
+      }
+    });
+  </script>
 </body>
 </html>
