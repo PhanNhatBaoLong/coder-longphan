@@ -3,136 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phan Nhat Bao Long - Developer</title>
+  <title>Phan Nhat Bao Long</title>
   <style>
     body {
       margin: 0;
       font-family: "Fira Code", monospace;
-      background: #0d0d0f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       color: #e4e4e7;
+      background: radial-gradient(circle at top left, #0d0d0f, #18181b 60%, #0d0d0f);
       overflow: hidden;
     }
 
-    /* Matrix rain background */
-    canvas {
+    /* Grid background like IDE */
+    body::before {
+      content: "";
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: -1;
-      background: #0d0d0f;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
     }
 
-    .terminal {
-      max-width: 720px;
-      margin: 40px auto;
+    .card {
+      position: relative;
+      z-index: 10;
       background: #18181b;
-      border-radius: 10px;
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      width: 380px;
       box-shadow: 0 0 40px rgba(0,0,0,0.6);
-      overflow: hidden;
       border: 1px solid #27272a;
+      transition: 0.4s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: #3b82f6;
+      box-shadow: 0 0 40px rgba(59,130,246,0.3);
     }
 
-    /* Fake window bar */
-    .bar {
-      display: flex;
-      align-items: center;
-      padding: 6px 10px;
-      background: #111;
-      border-bottom: 1px solid #27272a;
-    }
-    .dot {
-      width: 12px; height: 12px;
+    .avatar {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      margin-right: 6px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 3px solid #3b82f6;
+      box-shadow: 0 0 20px rgba(59,130,246,0.4);
     }
-    .dot.red {background: #ef4444;}
-    .dot.yellow {background: #f59e0b;}
-    .dot.green {background: #22c55e;}
 
-    .content {
-      padding: 20px;
-      font-size: 15px;
-      line-height: 1.6;
+    h1 {
+      margin: 10px 0;
+      font-size: 28px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 1px;
     }
-    .green {color: #22c55e;}
-    .blue {color: #3b82f6;}
-    .purple {color: #a855f7;}
+
+    .typing {
+      font-size: 14px;
+      background: #0f172a;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid #1e293b;
+      color: #22c55e;
+      text-align: left;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 320px;
+      min-height: 50px;
+      white-space: pre-wrap;
+      box-shadow: inset 0 0 12px rgba(34,197,94,0.2);
+    }
+
+    .keyword {color: #3b82f6;}
+    .string {color: #eab308;}
+    .var {color: #a855f7;}
 
     .links a {
-      display: inline-block;
-      margin: 8px 12px 0 0;
+      display: block;
       text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 6px;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 10px;
       background: #27272a;
       color: #e4e4e7;
-      font-size: 14px;
-      transition: 0.25s ease;
+      font-weight: 500;
+      transition: all 0.25s ease;
     }
     .links a:hover {
       background: #3b82f6;
       color: #fff;
-      transform: translateY(-2px);
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(59,130,246,0.4);
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #71717a;
     }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
+  <div class="card">
+    <img src="https://i.postimg.cc/CLppn1rR/IMG-20250913-174648.jpg" alt="Avatar" class="avatar">
+    <h1>Phan Nhat Bao Long</h1>
 
-  <div class="terminal">
-    <div class="bar">
-      <div class="dot red"></div>
-      <div class="dot yellow"></div>
-      <div class="dot green"></div>
+    <pre class="typing" id="terminal"></pre>
+
+    <div class="links">
+      <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
+      <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
+      <a href="https://www.tiktok.com/@longcutedzs1tg" target="_blank">🎬 TikTok</a>
+      <a href="https://t.me/longphandz" target="_blank">💬 Telegram</a>
+      <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Email</a>
     </div>
-    <div class="content">
-      <p><span class="green">root@localhost</span>:<span class="blue">~</span>$ echo "<span class="purple">Hello World!</span>"</p>
-      <h2>👨‍💻 Phan Nhat Bao Long</h2>
-      <p>Fullstack Developer • Security Enthusiast</p>
-      <div class="links">
-        <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo 1</a>
-        <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo 2</a>
-        <a href="https://www.tiktok.com/@longcutedzs1tg" target="_blank">🎬 TikTok</a>
-        <a href="https://t.me/longphandz" target="_blank">💬 Telegram</a>
-        <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Email</a>
-      </div>
-    </div>
+    <footer>© 2025 Phan Nhat Bao Long</footer>
   </div>
 
   <script>
-    // Matrix rain effect
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
+    const terminal = document.getElementById("terminal");
+    const lines = [
+      '<span class="keyword">root@localhost</span>:~# <span class="keyword">echo</span> <span class="string">"Hello World!"</span>',
+      '<span class="keyword">const</span> <span class="var">name</span> = <span class="string">"Phan Nhat Bao Long"</span>;',
+      '<span class="keyword">console</span>.log(<span class="var">name</span>);'
+    ];
 
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-
-    const chars = "01";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-
-    function draw() {
-      ctx.fillStyle = "rgba(0,0,0,0.1)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#22c55e";
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = chars.charAt(Math.floor(Math.random() * chars.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
+    let i = 0, j = 0, currentLine = "";
+    function typeEffect() {
+      if (i < lines.length) {
+        if (j < lines[i].length) {
+          currentLine += lines[i][j++];
+          terminal.innerHTML = lines.slice(0,i).join("\n") + "\n" + currentLine + "▋";
+          setTimeout(typeEffect, 30);
+        } else {
+          currentLine = "";
+          j = 0; i++;
+          setTimeout(typeEffect, 600);
         }
-        drops[i]++;
+      } else {
+        i = 0; j = 0; currentLine = "";
+        terminal.innerHTML = "";
+        setTimeout(typeEffect, 500);
       }
     }
-    setInterval(draw, 40);
-
-    window.addEventListener("resize", () => {
-      canvas.height = window.innerHeight;
-      canvas.width = window.innerWidth;
-    });
+    typeEffect();
   </script>
 </body>
 </html>
