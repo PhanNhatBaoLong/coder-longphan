@@ -7,117 +7,192 @@
   <style>
     body {
       margin: 0;
-      font-family: "Fira Code", monospace;
-      background: #0d0d0f;
-      color: #e4e4e7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      color: #fff;
+      background: #000;
+      overflow: hidden;
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
+      align-items: flex-start; /* canh card từ trên xuống */
+    }
+
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 10; /* hạt rơi trên card */
+      pointer-events: none;
+    }
+
+    .card {
+      margin: 40px auto; /* cách trên 1 xíu cho đẹp */
+      position: relative;
+      z-index: 1;
+      background: rgba(20, 20, 20, 0.85);
+      padding: 35px;
+      border-radius: 20px;
+      text-align: center;
+      width: 360px;
+      box-shadow: 0 0 40px rgba(0, 255, 170, 0.4);
+      backdrop-filter: blur(10px);
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 50px rgba(138, 43, 226, 0.7);
+    }
+
+    .card:active {
+      transform: scale(0.96);
+      box-shadow: 0 0 60px rgba(0, 255, 170, 1), 0 0 90px rgba(138, 43, 226, 1);
     }
 
     .avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      border: 3px solid #3b82f6;
+      object-fit: cover;
+      border: 3px solid #00ffaa;
       margin-bottom: 15px;
+      box-shadow: 0 0 25px #00ffaa, 0 0 50px #8a2be2;
     }
 
     h1 {
-      font-size: 24px;
-      margin: 0;
+      margin: 10px 0;
+      font-size: 30px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #00ffaa, #ff00cc, #8a2be2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 20px rgba(255,0,200,0.6), 0 0 40px rgba(0,255,200,0.4);
     }
 
-    p {
-      color: #a1a1aa;
-      margin: 5px 0 15px;
-    }
-
-    .terminal {
-      background: #18181b;
-      padding: 10px 15px;
-      border-radius: 8px;
-      font-size: 14px;
-      margin-bottom: 20px;
-      color: #22c55e;
+    .typing {
+      font-size: 15px;
+      font-weight: 500;
+      color: #eee;
       white-space: nowrap;
       overflow: hidden;
-      border: 1px solid #27272a;
-      width: 280px;
+      border-right: 3px solid #00ffaa;
+      width: 0;
+      margin: 0 auto 20px auto;
+      animation: typing 6s steps(40, end) infinite alternate,
+                 blink 0.7s step-end infinite;
+      text-shadow: 0 0 10px #00ffaa;
     }
 
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 280px;
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
 
-    .link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      background: #27272a;
-      border-radius: 8px;
+    .links a {
+      display: block;
       text-decoration: none;
-      color: #e4e4e7;
-      font-size: 15px;
-      transition: 0.3s;
-      border: 1px solid #3f3f46;
+      margin: 12px 0;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .link:hover {
-      box-shadow: 0 0 15px #3b82f6;
-      transform: scale(1.05);
+    .links a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(0,255,170,0.4), transparent);
+      transition: all 0.5s;
+    }
+
+    .links a:hover::before {
+      left: 100%;
+    }
+
+    .links a:hover {
+      background: rgba(0,255,170,0.1);
+      box-shadow: 0 0 20px #00ffaa, 0 0 40px #8a2be2;
+      transform: scale(1.08);
     }
 
     footer {
       margin-top: 25px;
-      font-size: 12px;
-      color: #a1a1aa;
-    }
-
-    /* Hiệu ứng gõ chữ */
-    .typing {
-      border-right: 2px solid #22c55e;
-      animation: typing 4s steps(30, end), blink .8s infinite;
-      white-space: nowrap;
-      overflow: hidden;
-      display: inline-block;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink {
-      from { border-color: transparent }
-      to { border-color: #22c55e; }
+      font-size: 13px;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <img src="https://i.ibb.co/8L40MLtp/image.jpg" alt="Avatar" class="avatar">
+  <canvas id="bg"></canvas>
 
-  <h1>Phan Nhat Bao Long</h1>
-  <p>Fullstack Developer • Security Enthusiast</p>
-
-  <div class="terminal">
-    <span class="typing">root@localhost:~$ echo "Hello World!"</span>
+  <div class="card">
+    <img src="https://i.postimg.cc/CLppn1rR/IMG-20250913-174648.jpg" alt="Avatar" class="avatar">
+    <h1>Phan Nhat Bao Long</h1>
+    <p class="typing">root@localhost:~# echo "Hello Word!!"</p>
+    <div class="links">
+      <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
+      <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
+      <a href="https://www.tiktok.com/@longcutedzs1tg?_t=ZS-8zgtoo6ZIRs&_r=1" target="_blank">📌 Tiktok</a>
+      <a href="https://t.me/longphandz" target="_blank">📌 Telegram Box</a>
+      <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Gửi Email</a>
+    </div>
+    <footer>© 2025 Phan Nhat Bao Long</footer>
   </div>
 
-  <div class="links">
-    <a class="link" href="https://zalo.me/g/vkdbfz979">📌 Zalo Box 1</a>
-    <a class="link" href="https://zalo.me/g/magfdn526">📌 Zalo Box 2</a>
-    <a class="link" href="#">🎬 TikTok</a>
-    <a class="link" href="https://t.me/longphandz">💬 Telegram</a>
-    <a class="link" href="mailto:example@mail.com">✉️ Email</a>
-  </div>
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-  <footer>© 2025 Phan Nhat Bao Long</footer>
+    const particles = [];
+    for (let i = 0; i < 60; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 1,
+        d: Math.random() * 1 + 0.5
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(0,255,170,0.8)";
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, false);
+        ctx.fill();
+      });
+      update();
+    }
+
+    function update() {
+      particles.forEach(p => {
+        p.y += p.d;
+        if (p.y > canvas.height) {
+          p.y = 0;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    setInterval(draw, 33);
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
 </body>
 </html>
