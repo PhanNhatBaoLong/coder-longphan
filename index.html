@@ -23,41 +23,43 @@
       border-radius: 16px;
       width: 420px;
       text-align: center;
-      z-index: 1;
       cursor: pointer;
       overflow: hidden;
+      z-index: 0;
     }
 
     /* Viền bảy màu */
     .card::before {
       content: "";
       position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      border-radius: 18px;
-      background: linear-gradient(270deg, #ff0080, #7928ca, #007cf0, #00f0ff, #00ff9d, #faff00, #ff7b00, #ff0000, #ff0080);
-      background-size: 200% 200%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 16px;
+      padding: 2px; /* độ dày viền */
+      background: linear-gradient(270deg,
+        #ff0080, #7928ca, #007cf0, #00f0ff,
+        #00ff9d, #faff00, #ff7b00, #ff0000, #ff0080);
+      background-size: 300% 300%;
       animation: borderRainbow 6s linear infinite;
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
       z-index: -1;
     }
 
     @keyframes borderRainbow {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    /* Hiệu ứng khi click */
+    /* Khi click thì viền sáng mạnh hơn */
     .card:active::before {
-      filter: brightness(1.8);
-      animation: borderPulse 0.5s ease;
-    }
-
-    @keyframes borderPulse {
-      0% {filter: brightness(2);}
-      100% {filter: brightness(1.2);}
+      filter: brightness(2);
     }
 
     .avatar {
