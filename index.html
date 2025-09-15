@@ -8,152 +8,116 @@
     body {
       margin: 0;
       font-family: "Fira Code", monospace;
+      background: #0d0d0f;
+      color: #e4e4e7;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      color: #e4e4e7;
-      background: radial-gradient(circle at top left, #0d0d0f, #18181b 60%, #0d0d0f);
-      overflow: hidden;
-    }
-
-    /* Grid background like IDE */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      z-index: 0;
-    }
-
-    .card {
-      position: relative;
-      z-index: 10;
-      background: #18181b;
-      padding: 40px;
-      border-radius: 16px;
-      text-align: center;
-      width: 380px;
-      box-shadow: 0 0 40px rgba(0,0,0,0.6);
-      border: 1px solid #27272a;
-      transition: 0.4s ease;
-    }
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: #3b82f6;
-      box-shadow: 0 0 40px rgba(59,130,246,0.3);
+      flex-direction: column;
     }
 
     .avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 20px;
       border: 3px solid #3b82f6;
-      box-shadow: 0 0 20px rgba(59,130,246,0.4);
+      margin-bottom: 15px;
     }
 
     h1 {
-      margin: 10px 0;
-      font-size: 28px;
-      font-weight: 600;
-      color: #fff;
-      letter-spacing: 1px;
+      font-size: 24px;
+      margin: 0;
     }
 
-    .typing {
-      font-size: 14px;
-      background: #0f172a;
-      padding: 12px 16px;
+    p {
+      color: #a1a1aa;
+      margin: 5px 0 15px;
+    }
+
+    .terminal {
+      background: #18181b;
+      padding: 10px 15px;
       border-radius: 8px;
-      border: 1px solid #1e293b;
+      font-size: 14px;
+      margin-bottom: 20px;
       color: #22c55e;
-      text-align: left;
-      margin: 20px auto;
-      width: 100%;
-      max-width: 320px;
-      min-height: 50px;
-      white-space: pre-wrap;
-      box-shadow: inset 0 0 12px rgba(34,197,94,0.2);
+      white-space: nowrap;
+      overflow: hidden;
+      border: 1px solid #27272a;
+      width: 280px;
     }
 
-    .keyword {color: #3b82f6;}
-    .string {color: #eab308;}
-    .var {color: #a855f7;}
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 280px;
+    }
 
-    .links a {
-      display: block;
-      text-decoration: none;
-      margin: 10px 0;
+    .link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 12px;
-      border-radius: 10px;
       background: #27272a;
+      border-radius: 8px;
+      text-decoration: none;
       color: #e4e4e7;
-      font-weight: 500;
-      transition: all 0.25s ease;
+      font-size: 15px;
+      transition: 0.3s;
+      border: 1px solid #3f3f46;
     }
-    .links a:hover {
-      background: #3b82f6;
-      color: #fff;
+
+    .link:hover {
+      box-shadow: 0 0 15px #3b82f6;
       transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(59,130,246,0.4);
     }
 
     footer {
-      margin-top: 20px;
+      margin-top: 25px;
       font-size: 12px;
-      color: #71717a;
+      color: #a1a1aa;
+    }
+
+    /* Hiệu ứng gõ chữ */
+    .typing {
+      border-right: 2px solid #22c55e;
+      animation: typing 4s steps(30, end), blink .8s infinite;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      from { border-color: transparent }
+      to { border-color: #22c55e; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <img src="https://i.postimg.cc/CLppn1rR/IMG-20250913-174648.jpg" alt="Avatar" class="avatar">
-    <h1>Phan Nhat Bao Long</h1>
+  <img src="https://i.ibb.co/8L40MLtp/image.jpg" alt="Avatar" class="avatar">
 
-    <pre class="typing" id="terminal"></pre>
+  <h1>Phan Nhat Bao Long</h1>
+  <p>Fullstack Developer • Security Enthusiast</p>
 
-    <div class="links">
-      <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
-      <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
-      <a href="https://www.tiktok.com/@longcutedzs1tg" target="_blank">🎬 TikTok</a>
-      <a href="https://t.me/longphandz" target="_blank">💬 Telegram</a>
-      <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Email</a>
-    </div>
-    <footer>© 2025 Phan Nhat Bao Long</footer>
+  <div class="terminal">
+    <span class="typing">root@localhost:~$ echo "Hello World!"</span>
   </div>
 
-  <script>
-    const terminal = document.getElementById("terminal");
-    const lines = [
-      '<span class="keyword">root@localhost</span>:~# <span class="keyword">echo</span> <span class="string">"Hello World!"</span>',
-      '<span class="keyword">const</span> <span class="var">name</span> = <span class="string">"Phan Nhat Bao Long"</span>;',
-      '<span class="keyword">console</span>.log(<span class="var">name</span>);'
-    ];
+  <div class="links">
+    <a class="link" href="https://zalo.me/g/vkdbfz979">📌 Zalo Box 1</a>
+    <a class="link" href="https://zalo.me/g/magfdn526">📌 Zalo Box 2</a>
+    <a class="link" href="#">🎬 TikTok</a>
+    <a class="link" href="https://t.me/longphandz">💬 Telegram</a>
+    <a class="link" href="mailto:example@mail.com">✉️ Email</a>
+  </div>
 
-    let i = 0, j = 0, currentLine = "";
-    function typeEffect() {
-      if (i < lines.length) {
-        if (j < lines[i].length) {
-          currentLine += lines[i][j++];
-          terminal.innerHTML = lines.slice(0,i).join("\n") + "\n" + currentLine + "▋";
-          setTimeout(typeEffect, 30);
-        } else {
-          currentLine = "";
-          j = 0; i++;
-          setTimeout(typeEffect, 600);
-        }
-      } else {
-        i = 0; j = 0; currentLine = "";
-        terminal.innerHTML = "";
-        setTimeout(typeEffect, 500);
-      }
-    }
-    typeEffect();
-  </script>
+  <footer>© 2025 Phan Nhat Bao Long</footer>
 </body>
 </html>
