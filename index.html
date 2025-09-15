@@ -11,34 +11,53 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh; /* hết màn hình, không còn chừa khúc đen */
-      color: #e4e4e7;
+      height: 100vh;
       background: #0d0d0f;
+      color: #e4e4e7;
     }
 
     .card {
+      position: relative;
       background: #18181b;
       padding: 40px;
       border-radius: 16px;
       width: 420px;
       text-align: center;
-      box-shadow: 0 0 30px rgba(0,0,0,0.6);
-      border: 1px solid #27272a;
-      transition: 0.3s ease;
+      z-index: 1;
       cursor: pointer;
+      overflow: hidden;
     }
 
-    .card:hover {
-      transform: translateY(-6px);
-      border-color: #3b82f6;
-      box-shadow: 0 0 40px rgba(59,130,246,0.3);
+    /* Viền bảy màu */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 18px;
+      background: linear-gradient(270deg, #ff0080, #7928ca, #007cf0, #00f0ff, #00ff9d, #faff00, #ff7b00, #ff0000, #ff0080);
+      background-size: 200% 200%;
+      animation: borderRainbow 6s linear infinite;
+      z-index: -1;
     }
 
-    /* Hiệu ứng khi ấn (click) */
-    .card:active {
-      transform: scale(0.97);
-      box-shadow: 0 0 50px rgba(59,130,246,0.6);
-      border-color: #60a5fa;
+    @keyframes borderRainbow {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* Hiệu ứng khi click */
+    .card:active::before {
+      filter: brightness(1.8);
+      animation: borderPulse 0.5s ease;
+    }
+
+    @keyframes borderPulse {
+      0% {filter: brightness(2);}
+      100% {filter: brightness(1.2);}
     }
 
     .avatar {
@@ -82,6 +101,7 @@
       from {width: 0;}
       to {width: 100%;}
     }
+
     @keyframes blink {
       50% {border-color: transparent;}
     }
