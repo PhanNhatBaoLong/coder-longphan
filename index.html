@@ -7,215 +7,149 @@
   <style>
     body {
       margin: 0;
-      font-family: "Fira Code", monospace;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #000;
+      color: #fff;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: #0d0d0f;
-      color: #e4e4e7;
+      position: relative;
+      overflow: hidden;
     }
 
     .card {
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 220px;
+      cursor: pointer;
       position: relative;
-      background: #18181b;
-      padding: 40px;
-      border-radius: 16px;
-      width: 420px;
-      text-align: center;
-      cursor: pointer;
-      overflow: hidden;
-      z-index: 3;
-    }
-
-    /* Viền bảy màu */
-    .card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 16px;
-      padding: 2px;
-      background: linear-gradient(270deg,
-        #ff0080, #7928ca, #007cf0, #00f0ff,
-        #00ff9d, #faff00, #ff7b00, #ff0000, #ff0080);
-      background-size: 300% 300%;
-      animation: borderRainbow 6s linear infinite;
-      -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-              mask-composite: exclude;
-      z-index: -1;
-    }
-
-    @keyframes borderRainbow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .avatar {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 18px;
-      border: 3px solid #3b82f6;
-    }
-
-    h1 {
-      margin: 10px 0;
-      font-size: 26px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .role {
-      font-size: 14px;
-      color: #a1a1aa;
-      margin-bottom: 20px;
-    }
-
-    .typing {
-      font-size: 14px;
-      background: #0f172a;
-      color: #22c55e;
-      padding: 10px 14px;
-      border-radius: 8px;
-      display: inline-block;
-      margin-bottom: 20px;
-      border: 1px solid #1e293b;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #22c55e;
-      animation: typing 4s steps(30, end) infinite alternate, blink 0.7s step-end infinite;
-    }
-
-    @keyframes typing {
-      from {width: 0;}
-      to {width: 100%;}
-    }
-
-    @keyframes blink {
-      50% {border-color: transparent;}
-    }
-
-    .links a {
-      display: block;
+      z-index: 10; /* để card nằm trên mưa */
       text-decoration: none;
-      margin: 10px 0;
-      padding: 12px;
-      border-radius: 10px;
-      background: #27272a;
-      color: #e4e4e7;
-      font-weight: 500;
-      transition: all 0.25s ease;
-      cursor: pointer;
+      color: #fff;
+      border: 2px solid transparent;
+      border-image: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet) 1;
+      transition: all 0.25s ease-in-out;
     }
 
-    .links a:hover {
-      background: #3b82f6;
-      color: #fff;
+    .card:hover {
+      background: rgba(50, 50, 50, 0.9);
       transform: scale(1.05);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+    }
+
+    .card:active {
+      background: rgba(70, 70, 70, 1);
+      box-shadow: 0 0 18px rgba(0, 255, 255, 0.7);
+      border-color: cyan;
     }
 
     footer {
-      margin-top: 25px;
-      font-size: 12px;
-      color: #71717a;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #aaa;
+      text-align: center;
+      z-index: 10;
+      position: relative;
     }
 
-    .slogan-footer {
-      margin-top: 6px;
-      font-size: 13px;
+    footer span {
+      display: block;
       font-weight: 600;
-      color: #3b82f6;
+      margin-top: 4px;
+      background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00ab, #ff0000);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: gradientMove 3s linear infinite;
     }
 
-    /* canvas mưa */
-    #canvasRain {
+    @keyframes gradientMove {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Canvas mưa luôn nằm trên hết */
+    #rainCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      display: block;
+      pointer-events: none;
+      z-index: 999;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <img src="https://i.postimg.cc/CLppn1rR/IMG-20250913-174648.jpg" alt="Avatar" class="avatar">
-    <h1>Phan Nhat Bao Long</h1>
-    <p class="role">Module 1TB • Nhận làm theo yêu cầu • Mua module ib trực tiếp qua Zalo LongPhan</p>
-    <p class="typing">root@localhost:~$ echo "Hello World!"</p>
-    <div class="links">
-      <a onclick="window.open('https://zalo.me/g/magfdn526','_blank')">📌 Zalo Box 1</a>
-      <a onclick="window.open('https://zalo.me/g/vkdbfz979','_blank')">📌 Zalo Box 2</a>
-      <a onclick="window.open('https://zalo.me/84376363058','_blank')">📌 Zalo LongPhan</a>
-      <a onclick="window.open('https://www.tiktok.com/@longcutedzs1tg','_blank')">🎬 TikTok</a>
-      <a onclick="window.open('https://t.me/longphandz','_blank')">💬 Telegram</a>
-      <a onclick="window.open('mailto:phannhatbaolong1701@gmail.com','_blank')">✉️ Email</a>
-    </div>
-    <footer>
-      © 2025 Phan Nhat Bao Long
-      <div class="slogan-footer">Uy tín • Nhanh chóng • Giá Rẻ</div>
-    </footer>
-  </div>
+  <!-- Card links -->
+  <a href="https://zalo.me/123456" class="card">📌 Zalo Box 1</a>
+  <a href="https://zalo.me/654321" class="card">📌 Zalo Box 2</a>
+  <a href="https://zalo.me/098765" class="card">📌 Zalo LongPhan</a>
+  <a href="#" class="card">🎬 TikTok</a>
+  <a href="#" class="card">💬 Telegram</a>
+  <a href="mailto:abc@gmail.com" class="card">✉️ Email</a>
 
-  <!-- Canvas mưa -->
-  <canvas id="canvasRain" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none;"></canvas>
+  <!-- Footer -->
+  <footer>
+    © 2025 Phan Nhat Bao Long
+    <span>✅ Uy tín • Nhanh chóng • Giá rẻ</span>
+  </footer>
 
+  <!-- Hiệu ứng mưa -->
+  <canvas id="rainCanvas"></canvas>
   <script>
-    const canvas = document.getElementById("canvasRain");
-    const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById('rainCanvas');
+    const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    class RainDrop {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * -canvas.height;
-        this.length = 10 + Math.random() * 20;
-        this.speed = 4 + Math.random() * 4;
-        this.opacity = 0.2 + Math.random() * 0.6;
-      }
-      update() {
-        this.y += this.speed;
-        if (this.y > canvas.height) {
-          this.reset();
-        }
-      }
-      draw() {
-        ctx.strokeStyle = `rgba(174,194,224,${this.opacity})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x, this.y + this.length);
-        ctx.stroke();
-      }
+    const raindrops = [];
+    for (let i = 0; i < 100; i++) {
+      raindrops.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        length: Math.random() * 15 + 15,
+        speed: Math.random() * 4 + 4
+      });
     }
 
-    const rainDrops = [];
-    for (let i = 0; i < 300; i++) {
-      rainDrops.push(new RainDrop());
+    function drawRain() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(174,194,224,0.8)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let drop of raindrops) {
+        ctx.moveTo(drop.x, drop.y);
+        ctx.lineTo(drop.x, drop.y + drop.length);
+      }
+      ctx.stroke();
+      moveRain();
+    }
+
+    function moveRain() {
+      for (let drop of raindrops) {
+        drop.y += drop.speed;
+        if (drop.y > canvas.height) {
+          drop.y = -20;
+          drop.x = Math.random() * canvas.width;
+        }
+      }
     }
 
     function animateRain() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      rainDrops.forEach(drop => {
-        drop.update();
-        drop.draw();
-      });
+      drawRain();
       requestAnimationFrame(animateRain);
     }
 
     animateRain();
-
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
