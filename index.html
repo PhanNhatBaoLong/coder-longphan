@@ -11,7 +11,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       background: #0d0d0f;
       color: #e4e4e7;
     }
@@ -25,17 +25,13 @@
       text-align: center;
       cursor: pointer;
       overflow: hidden;
-      z-index: 2;
+      z-index: 1;
     }
 
-    /* Viền bảy màu */
     .card::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0;left: 0;right: 0;bottom: 0;
       border-radius: 16px;
       padding: 2px;
       background: linear-gradient(270deg,
@@ -58,8 +54,7 @@
     }
 
     .avatar {
-      width: 110px;
-      height: 110px;
+      width: 110px;height: 110px;
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 18px;
@@ -94,16 +89,11 @@
       animation: typing 4s steps(30, end) infinite alternate, blink 0.7s step-end infinite;
     }
 
-    @keyframes typing {
-      from {width: 0;}
-      to {width: 100%;}
-    }
-
-    @keyframes blink {
-      50% {border-color: transparent;}
-    }
+    @keyframes typing { from {width: 0;} to {width: 100%;} }
+    @keyframes blink { 50% {border-color: transparent;} }
 
     .links a {
+      position: relative;
       display: block;
       text-decoration: none;
       margin: 10px 0;
@@ -113,20 +103,36 @@
       color: #e4e4e7;
       font-weight: 500;
       transition: all 0.25s ease;
-      -webkit-tap-highlight-color: transparent !important;
-      outline: none !important;
+      cursor: pointer;
+      overflow: hidden;
     }
 
+    /* Hover */
     .links a:hover {
       background: #3b82f6;
       color: #fff;
       transform: scale(1.05);
     }
 
-    .links a:active {
-      transform: scale(0.95);
-      box-shadow: 0 0 12px #3b82f6;
-      background: #1e3a8a;
+    /* Hiệu ứng viền 7 màu khi click */
+    .links a::after {
+      content: "";
+      position: absolute;
+      top: -2px;left: -2px;right: -2px;bottom: -2px;
+      border-radius: 12px;
+      padding: 2px;
+      background: linear-gradient(270deg,
+        #ff0080, #7928ca, #007cf0, #00f0ff,
+        #00ff9d, #faff00, #ff7b00, #ff0000, #ff0080);
+      background-size: 300% 300%;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+
+    .links a.clicked::after {
+      opacity: 1;
+      animation: borderRainbow 2s linear infinite;
     }
 
     footer {
@@ -142,15 +148,10 @@
       color: #3b82f6;
     }
 
-    /* canvas mưa */
     #canvasRain {
-      position: fixed;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
-      z-index: 9999; /* mưa đè lên card */
-      pointer-events: none;
+      display: block;
     }
   </style>
 </head>
@@ -161,12 +162,12 @@
     <p class="role">Module 1TB • Nhận làm theo yêu cầu • Mua module ib trực tiếp qua Zalo LongPhan</p>
     <p class="typing">root@localhost:~$ echo "Hello World!"</p>
     <div class="links">
-      <a href="#" onclick="openLink('https://zalo.me/g/magfdn526')">📌 Zalo Box 1</a>
-      <a href="#" onclick="openLink('https://zalo.me/g/vkdbfz979')">📌 Zalo Box 2</a>
-      <a href="#" onclick="openLink('https://zalo.me/84376363058')">📌 Zalo LongPhan</a>
-      <a href="#" onclick="openLink('https://www.tiktok.com/@longcutedzs1tg')">🎬 TikTok</a>
-      <a href="#" onclick="openLink('https://t.me/longphandz')">💬 Telegram</a>
-      <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Email</a>
+      <a data-url="https://zalo.me/g/magfdn526">📌 Zalo Box 1</a>
+      <a data-url="https://zalo.me/g/vkdbfz979">📌 Zalo Box 2</a>
+      <a data-url="https://zalo.me/84376363058">📌 Zalo LongPhan</a>
+      <a data-url="https://www.tiktok.com/@longcutedzs1tg">🎬 TikTok</a>
+      <a data-url="https://t.me/longphandz">💬 Telegram</a>
+      <a data-url="mailto:phannhatbaolong1701@gmail.com">✉️ Email</a>
     </div>
     <footer>
       © 2025 Phan Nhat Bao Long
@@ -175,23 +176,31 @@
   </div>
 
   <!-- Canvas mưa -->
-  <canvas id="canvasRain"></canvas>
+  <canvas id="canvasRain" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none;"></canvas>
 
   <script>
-    // Ẩn link thật
-    function openLink(url) {
-      window.open(url, "_blank");
-    }
+    // Ẩn link thật và mở tab bằng JS
+    document.querySelectorAll(".links a").forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const url = link.getAttribute("data-url");
 
+        // thêm hiệu ứng clicked
+        link.classList.add("clicked");
+        setTimeout(() => link.classList.remove("clicked"), 1500);
+
+        if (url) window.open(url, "_blank");
+      });
+    });
+
+    // Hiệu ứng mưa
     const canvas = document.getElementById("canvasRain");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     class RainDrop {
-      constructor() {
-        this.reset();
-      }
+      constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * -canvas.height;
@@ -199,12 +208,7 @@
         this.speed = 4 + Math.random() * 4;
         this.opacity = 0.2 + Math.random() * 0.6;
       }
-      update() {
-        this.y += this.speed;
-        if (this.y > canvas.height) {
-          this.reset();
-        }
-      }
+      update() { this.y += this.speed; if (this.y > canvas.height) this.reset(); }
       draw() {
         ctx.strokeStyle = `rgba(174,194,224,${this.opacity})`;
         ctx.lineWidth = 1;
@@ -216,19 +220,13 @@
     }
 
     const rainDrops = [];
-    for (let i = 0; i < 300; i++) {
-      rainDrops.push(new RainDrop());
-    }
+    for (let i = 0; i < 300; i++) rainDrops.push(new RainDrop());
 
     function animateRain() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      rainDrops.forEach(drop => {
-        drop.update();
-        drop.draw();
-      });
+      rainDrops.forEach(drop => { drop.update(); drop.draw(); });
       requestAnimationFrame(animateRain);
     }
-
     animateRain();
 
     window.addEventListener("resize", () => {
