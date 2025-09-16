@@ -6,15 +6,14 @@
   <title>Phan Nhat Bao Long</title>
   <style>
     body {
-  margin: 0;
-  font-family: "Fira Code", monospace;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;   /* thay height thành min-height */
-  background: #0d0d0f;
-  color: #e4e4e7;
-  /* bỏ overflow:hidden */
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #0d0d0f;
+      color: #e4e4e7;
     }
 
     .card {
@@ -26,7 +25,7 @@
       text-align: center;
       cursor: pointer;
       overflow: hidden;
-      z-index: 1;
+      z-index: 3;
     }
 
     /* Viền bảy màu */
@@ -114,6 +113,7 @@
       color: #e4e4e7;
       font-weight: 500;
       transition: all 0.25s ease;
+      cursor: pointer;
     }
 
     .links a:hover {
@@ -144,14 +144,19 @@
   </style>
 </head>
 <body>
-  <div class="links">
-  <a href="javascript:void(0)" onclick="window.open('https://zalo.me/g/magfdn526','_blank')">📌 Zalo Box 1</a>
-  <a href="javascript:void(0)" onclick="window.open('https://zalo.me/g/vkdbfz979','_blank')">📌 Zalo Box 2</a>
-  <a href="javascript:void(0)" onclick="window.open('https://zalo.me/84376363058','_blank')">📌 Zalo LongPhan</a>
-  <a href="javascript:void(0)" onclick="window.open('https://www.tiktok.com/@longcutedzs1tg','_blank')">🎬 TikTok</a>
-  <a href="javascript:void(0)" onclick="window.open('https://t.me/longphandz','_blank')">💬 Telegram</a>
-  <a href="javascript:void(0)" onclick="window.open('mailto:phannhatbaolong1701@gmail.com','_blank')">✉️ Email</a>
-  </div>
+  <div class="card">
+    <img src="https://i.postimg.cc/CLppn1rR/IMG-20250913-174648.jpg" alt="Avatar" class="avatar">
+    <h1>Phan Nhat Bao Long</h1>
+    <p class="role">Module 1TB • Nhận làm theo yêu cầu • Mua module ib trực tiếp qua Zalo LongPhan</p>
+    <p class="typing">root@localhost:~$ echo "Hello World!"</p>
+    <div class="links">
+      <a onclick="window.open('https://zalo.me/g/magfdn526','_blank')">📌 Zalo Box 1</a>
+      <a onclick="window.open('https://zalo.me/g/vkdbfz979','_blank')">📌 Zalo Box 2</a>
+      <a onclick="window.open('https://zalo.me/84376363058','_blank')">📌 Zalo LongPhan</a>
+      <a onclick="window.open('https://www.tiktok.com/@longcutedzs1tg','_blank')">🎬 TikTok</a>
+      <a onclick="window.open('https://t.me/longphandz','_blank')">💬 Telegram</a>
+      <a onclick="window.open('mailto:phannhatbaolong1701@gmail.com','_blank')">✉️ Email</a>
+    </div>
     <footer>
       © 2025 Phan Nhat Bao Long
       <div class="slogan-footer">Uy tín • Nhanh chóng • Giá Rẻ</div>
