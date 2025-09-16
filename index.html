@@ -11,7 +11,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
       background: #0d0d0f;
       color: #e4e4e7;
     }
@@ -25,8 +25,7 @@
       text-align: center;
       cursor: pointer;
       overflow: hidden;
-      z-index: 1;
-      -webkit-tap-highlight-color: transparent; /* bỏ hiệu ứng xanh khi bấm */
+      z-index: 2;
     }
 
     /* Viền bảy màu */
@@ -114,12 +113,20 @@
       color: #e4e4e7;
       font-weight: 500;
       transition: all 0.25s ease;
+      -webkit-tap-highlight-color: transparent !important;
+      outline: none !important;
     }
 
     .links a:hover {
       background: #3b82f6;
       color: #fff;
       transform: scale(1.05);
+    }
+
+    .links a:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 12px #3b82f6;
+      background: #1e3a8a;
     }
 
     footer {
@@ -135,15 +142,15 @@
       color: #3b82f6;
     }
 
-    /* Canvas mưa */
+    /* canvas mưa */
     #canvasRain {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 9999 !important; /* mưa đè lên card */
-      pointer-events: none;     /* không chặn click */
+      z-index: 9999; /* mưa đè lên card */
+      pointer-events: none;
     }
   </style>
 </head>
@@ -154,11 +161,11 @@
     <p class="role">Module 1TB • Nhận làm theo yêu cầu • Mua module ib trực tiếp qua Zalo LongPhan</p>
     <p class="typing">root@localhost:~$ echo "Hello World!"</p>
     <div class="links">
-      <a href="https://zalo.me/g/magfdn526" target="_blank">📌 Zalo Box 1</a>
-      <a href="https://zalo.me/g/vkdbfz979" target="_blank">📌 Zalo Box 2</a>
-      <a href="https://zalo.me/84376363058" target="_blank">📌 Zalo LongPhan</a>
-      <a href="https://www.tiktok.com/@longcutedzs1tg" target="_blank">🎬 TikTok</a>
-      <a href="https://t.me/longphandz" target="_blank">💬 Telegram</a>
+      <a href="#" onclick="openLink('https://zalo.me/g/magfdn526')">📌 Zalo Box 1</a>
+      <a href="#" onclick="openLink('https://zalo.me/g/vkdbfz979')">📌 Zalo Box 2</a>
+      <a href="#" onclick="openLink('https://zalo.me/84376363058')">📌 Zalo LongPhan</a>
+      <a href="#" onclick="openLink('https://www.tiktok.com/@longcutedzs1tg')">🎬 TikTok</a>
+      <a href="#" onclick="openLink('https://t.me/longphandz')">💬 Telegram</a>
       <a href="mailto:phannhatbaolong1701@gmail.com">✉️ Email</a>
     </div>
     <footer>
@@ -171,6 +178,11 @@
   <canvas id="canvasRain"></canvas>
 
   <script>
+    // Ẩn link thật
+    function openLink(url) {
+      window.open(url, "_blank");
+    }
+
     const canvas = document.getElementById("canvasRain");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
