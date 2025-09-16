@@ -115,20 +115,28 @@
     }
 
     /* Viền 7 màu khi click */
-    .links a::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 12px;
-      border: 2px solid transparent;
-      background: linear-gradient(270deg,
-        #ff0080, #7928ca, #007cf0, #00f0ff,
-        #00ff9d, #faff00, #ff7b00, #ff0000, #ff0080) border-box;
-      background-size: 300% 300%;
-      opacity: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
+    /* Viền 7 màu khi click */
+.links a::after {
+  content: "";
+  position: absolute;
+  top: 0;left: 0;right: 0;bottom: 0;
+  border-radius: 12px;
+  padding: 2px; /* tạo khoảng border */
+  background: linear-gradient(270deg,
+    #ff0080, #7928ca, #007cf0, #00f0ff,
+    #00ff9d, #faff00, #ff7b00, #ff0000, #ff0080);
+  background-size: 300% 300%;
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  /* chỉ để lại viền */
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
 
     .links a.clicked::after {
       opacity: 1;
