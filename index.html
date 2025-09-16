@@ -105,16 +105,16 @@
       transition: all 0.25s ease;
       cursor: pointer;
       overflow: hidden;
+      border: 2px solid transparent; /* viền trong suốt mặc định */
     }
 
-    /* Hover */
+    /* Hover: chỉ đổi màu chữ + scale, không nền xanh */
     .links a:hover {
-      background: #3b82f6;
       color: #fff;
       transform: scale(1.05);
     }
 
-    /* Hiệu ứng viền 7 màu khi click */
+    /* Viền 7 màu khi click */
     .links a::after {
       content: "";
       position: absolute;
@@ -127,6 +127,11 @@
       background-size: 300% 300%;
       opacity: 0;
       z-index: -1;
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
       transition: opacity 0.3s ease;
     }
 
